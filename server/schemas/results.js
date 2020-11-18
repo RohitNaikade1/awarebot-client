@@ -1,0 +1,38 @@
+const mongoose=require("mongoose");
+const resultSchema=new mongoose.Schema({
+    subjectCode:{
+        type:[Number],
+        required:true
+    },
+    Subjects:{
+        type:[String],
+        required:true
+    },
+    lowestMarks:{
+        type:[Number],
+        required:true
+    },
+    highestMarks:{
+        type:[Number],
+        required:true
+    },
+    studentAppeared:{
+        type:[Number],
+        required:true
+    },
+    studentPassed:{
+        type:[Number],
+        required:true
+    },
+    passed:{
+        type:[Number],
+        required:true
+    },
+    Above60:{
+        type:[Number],
+        required:true
+    }
+},{
+    timestamps:true
+});
+module.exports=mongoose.model('result',resultSchema);

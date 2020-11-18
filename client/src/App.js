@@ -4,7 +4,7 @@ import 'font-awesome/css/font-awesome.css';
 import 'bootstrap-social/bootstrap-social.css';
 import Footer from './components/header & footers/footer';
 import Header from './components/header & footers/header';
-import Home from './components/home';
+import Home from './components/home/home';
 import Admin from './components/admin';
 import Notice from './components/noticeboard';
 import Login from './components/login';
