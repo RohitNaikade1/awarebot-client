@@ -1,24 +1,25 @@
-const Result=require("../schemas/results");
+const Result=require("../schemas/resultSchema");
+
 exports.AddRecord=(req,res)=>{
-    console.log(req.body);
-    const subCodes=req.body.subjectCode;
-    const subjects=req.body.Subjects;
-    const lowMarks=req.body.lowestMarks;
-    const highMarks=req.body.highestMarks;
-    const studAppeared=req.body.studentAppeared;
-    const studPassed=req.body.studentPassed;
-    const pass=req.body.passed;
-    const above60=req.body.Above60;
+    // console.log(req.body);
+    const ID=req.body.ID;
+    const month=req.body.month;
+    const JavaCount=req.body.JavaCount;
+    const CPPCount=req.body.CPPCount;
+    const DSCount=req.body.DSCount;
     const data=new Result({
-        subCodes,
-        subjects,
-        lowMarks,
-        highMarks,
-        studAppeared,
-        studPassed,
-        pass,
-        above60
+        ID,
+        month,
+        JavaCount,
+        CPPCount,
+        DSCount
     });
+    console.log(data)
+    // Result.insertMany(data,(err,data)=>{
+    //     return res.status(200).json({
+    //         msg:"success"
+    //     })
+    // })
     data.save((error,data)=>{
         if (error) {
             return res.status(400).json({
@@ -26,13 +27,25 @@ exports.AddRecord=(req,res)=>{
             });
         }
         if (data) {
-            return res.status(201).json({
+            return res.status(200).json({
                 data: data
             });
         }
     })
 }
 
-exports.fetchRecord=()=>{
-
+exports.fetchRecord=(req,res)=>{
+    Result.find({})
+    .exec((err,response)=>{
+        if (response) {
+            return res.status(200).json({
+                data: response
+            })
+            if (err) {
+                return res.status(500).json({
+                    data: err
+                })
+            }
+        }
+    })
 }

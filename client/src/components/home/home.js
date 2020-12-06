@@ -1,5 +1,7 @@
 import React from 'react';
 import "./home.css"
+import Attendence from './attendence';
+import Result from './results';
 import FrontView from './carousel/Front view.jpg';
 import SideView from './carousel/side view.jpg';
 import TopView from './carousel/top view.jpg';
@@ -113,6 +115,14 @@ const Home = () => {
                     </Carousel>
                 </Col>
             </Row>
+            <Row className="d-flex mt-5">
+                    <Col className="col-md-6">
+                        <Attendence />
+                    </Col>
+                    <Col className="col-md-6">
+                        <Result />
+                    </Col>
+                </Row>
         </Container>
         
     )
