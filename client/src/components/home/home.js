@@ -2,14 +2,14 @@ import React from 'react';
 import "./home.css"
 import Attendence from './attendence';
 import Result from './results';
-import FrontView from './carousel/Front view.jpg';
-import SideView from './carousel/side view.jpg';
-import TopView from './carousel/top view.jpg';
-import Assembly from './carousel/Assembly.jpg';
-import StudentCorner from './carousel/student corner.jpg';
-import PosterWall from './carousel/Poster Wall.jpg';
-import Mess from './carousel/hostel mess.jpg';
-import Library from './carousel/library.jpg';
+import FrontView from './carousel/1.jpeg';
+import SideView from './carousel/2.jpeg';
+import TopView from './carousel/3.jpeg';
+// import Assembly from './carousel/Assembly.jpg';
+// import StudentCorner from './carousel/student corner.jpg';
+// import PosterWall from './carousel/Poster Wall.jpg';
+// import Mess from './carousel/hostel mess.jpg';
+// import Library from './carousel/library.jpg';
 import { Container, Row, Col,Carousel } from 'react-bootstrap';
 const Home = () => {
     return (
@@ -24,8 +24,8 @@ const Home = () => {
                                 alt="FrontView"
                             />
                             <Carousel.Caption className=".d-sm-none .d-md-block">
-                                <h3>Government Polytechnic Awasari (Khurd)</h3>
-                                <p>Government Polytechnic, Awasari (Khurd) was established in the rural area in Pune District and is making rapid progress in enhancing its potential and changing its outlook towards providing better environment required to impart the best all round quality technical education laced with morality aimed at fulfilling industry and social needs.</p>
+                                {/* <h3>Government Polytechnic Awasari (Khurd)</h3>
+                                <p>Government Polytechnic, Awasari (Khurd) was established in the rural area in Pune District and is making rapid progress in enhancing its potential and changing its outlook towards providing better environment required to impart the best all round quality technical education laced with morality aimed at fulfilling industry and social needs.</p> */}
                             </Carousel.Caption>
                         </Carousel.Item>
                         <Carousel.Item interval={1000}>
@@ -36,8 +36,8 @@ const Home = () => {
                             />
 
                             <Carousel.Caption>
-                                <h3>Government Polytechnic Awasari (Khurd)</h3>
-                                <p>Our goal is to support the students for their overall development. We take efforts to make our students able to face challenges and stand confidently in the increasingly complex world.</p>
+                                {/* <h3>Government Polytechnic Awasari (Khurd)</h3>
+                                <p>Our goal is to support the students for their overall development. We take efforts to make our students able to face challenges and stand confidently in the increasingly complex world.</p> */}
                             </Carousel.Caption>
                         </Carousel.Item>
                         <Carousel.Item interval={1000}>
@@ -48,11 +48,11 @@ const Home = () => {
                             />
 
                             <Carousel.Caption>
-                                <h3>Government Polytechnic Awasari (Khurd)</h3>
-                                <p>The incredible faculty and staff at Government Polytechnic Awasari (Khurd) continue to encourage all students to set high goals for themselves and to reach their dreams. To achieve our mission and vision we will continue to develop and grow leaders in our institute</p>
+                                {/* <h3>Government Polytechnic Awasari (Khurd)</h3>
+                                <p>The incredible faculty and staff at Government Polytechnic Awasari (Khurd) continue to encourage all students to set high goals for themselves and to reach their dreams. To achieve our mission and vision we will continue to develop and grow leaders in our institute</p> */}
                             </Carousel.Caption>
                         </Carousel.Item>
-                        <Carousel.Item interval={1000}>
+                        {/* <Carousel.Item interval={1000}>
                             <img
                                 className="d-block w-100"
                                 src={Assembly}
@@ -111,7 +111,7 @@ const Home = () => {
                                 <h3>College Library.</h3>
                                 <p>A College library for students with technical,academic books.Daily news papers are also available for students in both English and marathi langugage.</p>
                             </Carousel.Caption>
-                        </Carousel.Item>
+                        </Carousel.Item> */}
                     </Carousel>
                 </Col>
             </Row>
