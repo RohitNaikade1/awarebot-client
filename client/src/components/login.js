@@ -30,7 +30,7 @@ class Loginpage extends Component{
                     onClick={this
                     .showLoginBox
                     .bind(this)}>
-                    <h4>Student</h4>
+                    <h4>User</h4>
                 </Col>
                 <Col
                     className={"controller " + (this.state.isRegisterOpen

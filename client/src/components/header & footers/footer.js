@@ -8,7 +8,8 @@ class Footer extends Component{
             <Container fluid className="mt-4">
                 <Row className="d-flex justify-content-md-between justify-content-sm-center bg-dark">
                     <div className="mt-3 text-white col-md-4 col-sm-12 mb-4">
-                       <h3>Team AwareBot.</h3>
+                       <h3>About Visionware.</h3>
+                       <p>VisionWare is a category defining software development and training company focused on helping organizations translate the big promise of Information Technology into quantifiable business impact.</p>
                     </div>
                     <div className="mt-3 text-white col-md-4 mb-4 col-sm-12">
                        <h3>Quick Links:</h3>
@@ -26,7 +27,7 @@ class Footer extends Component{
                     </div>
                     <div className="mt-3 mb-4 text-white justify-content-sm-center col-md-4 col-sm-12">
                        <h4>Need help?</h4>
-                       <p className="ml-5"><span className="fa fa-envelope-o fa-md mr-2 mt-3"></span>Email:balticknightsofficial@gmail.com.</p>
+                       <p className="ml-5"><span className="fa fa-envelope-o fa-md mr-2 mt-3"></span>Email:visionware.pune@gmail.com.</p>
                        <h4>Connect with us:</h4>
                         <div className="mt-3 ml-5">
                             <a href="https://www.facebook.com/rohit.naikade.37" target="blank">

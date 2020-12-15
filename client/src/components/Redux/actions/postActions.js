@@ -14,3 +14,17 @@ export const postFetch=()=>{
         }
     }
 }
+
+export const tableFetch=()=>{
+    return async (dispatch)=>{
+        const tableData=await axiosInstance.get('/post/fetchToday');
+        const updates=tableData.data;
+        console.log(updates)
+        if(tableData.status===200){
+            dispatch({
+                type:constants.UPDATES_FETCH,
+                payload:updates
+            })
+        }
+    }
+}

@@ -1,7 +1,8 @@
 import { constants } from "../actions/constants";
 
 const initState={
-    posts:{}
+    posts:{},
+    updates:{}
 }
 
 export const postReducer=(state=initState,action)=>{
@@ -12,6 +13,12 @@ export const postReducer=(state=initState,action)=>{
             return state={
                 ...state,
                 posts:action.payload.data
+            }
+        case constants.UPDATES_FETCH:
+            // console.log(action.payload.data)
+            return state={
+                ...state,
+                updates:action.payload.data
             }
         default:
             return state

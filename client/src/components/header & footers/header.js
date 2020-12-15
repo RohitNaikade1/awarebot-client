@@ -1,39 +1,31 @@
 import React from 'react'
-import { Nav, Navbar,Button } from 'react-bootstrap';
+import { Nav, Navbar, Button } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
+import { IoHome, IoSchool, IoNotificationsCircleSharp } from "react-icons/io5";
+import { RiAdminFill } from "react-icons/ri";
+import { isAuth, signout } from '../helpers/auth';
+import { store } from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css';
+import 'animate.css';
+
 import '../components.css';
 const Header = (props) => {
-    // const renderContent = () => {
-    //     switch (props.user) {
-    //         case null:
-    //             return (
-    //                 <Button variant="outline-primary">
-    //                     <NavLink exact className="active_class login_btn" to="/login">
-    //                         <span className="fa fa-sign-in fa-lg mr-2"></span>
-    //                         Login
-    //                     </NavLink>
-    //                 </Button>)
-    //         case false:
-    //             return (
-    //                 <Button variant="outline-primary">
-    //                     <NavLink exact className="active_class login_btn" to="/login">
-    //                         <span className="fa fa-sign-in fa-lg mr-2"></span>
-    //                         Login
-    //                     </NavLink>
-    //                 </Button>)
-    //         default:
-    //             return (
-    //                 <>
-    //                     {/* <img className="profileImg mr-3" alt="poor network" src={props.user.picture}/> */}
-    //                     <Button variant="outline-primary">
-    //                         <NavLink exact className="active_class login_btn" to="/api/logout">
-    //                             <span className="fa fa-sign-out fa-lg mr-2"></span>
-    //                                 Logout
-    //                             </NavLink>
-    //                     </Button></>
-    //             )
-    //     }
-    // }
+    const signOut = () => {
+        store.addNotification({
+            title: "Signed out Successfully!",
+            message: 'You will be redirected on home page!',
+            type: "success",
+            container: 'top-right',
+            animationIn: ["animated", "fadeIn"],
+            animationOut: ["animated", "fadeOut"],
+            dismiss: {
+                duration: 3000,
+                showIcon: true
+            }
+        })
+        signout();
+
+    }
     return (
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
             <Navbar.Brand>AwareBot</Navbar.Brand>
@@ -41,19 +33,24 @@ const Header = (props) => {
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="mr-auto">
                     <NavLink exact activeClassName="active_class" className="links" to="/">
-                        <span className="fa fa-home fa-lg mr-2"></span>Home</NavLink>
-                    <NavLink exact activeClassName="active_class" className="links" to="/notice">
-                        <div className="ml-3"><span className="fa fa-file-text fa-lg mr-2"></span>Notice Board</div></NavLink>
-                    <NavLink exact activeClassName="active_class" className="links" to="/admin">
-                        <div className="ml-3"><span className="fa fa-unlock-alt fa-lg mr-2"></span>Admin Section</div>
-                    </NavLink>
+                        <IoHome className="mr-2" />Home</NavLink>
+                    <NavLink exact activeClassName="active_class" className="links ml-3" to="/about">
+                        <IoSchool className="mr-2" />About Visionware</NavLink>
+                    <NavLink exact activeClassName="active_class" className="links ml-3" to="/notice">
+                        <IoNotificationsCircleSharp className="mr-2" />Notice Board</NavLink>
+                    <NavLink exact activeClassName="active_class" className="links ml-3" to="/adHome">
+                        <RiAdminFill className="mr-2" />Admin Section</NavLink>
                 </Nav>
                 <Nav className="ml-auto mr-2">
-                    <Button variant="outline-primary">
-                        <NavLink exact className="active_class login_btn" to="/login">
-                            <span className="fa fa-sign-in fa-lg mr-2"></span>Login 
+                    {isAuth() ? <Button variant="outline-primary" onClick={signOut}>
+                        <span className="fa fa-sign-in fa-lg mr-2"></span>
+                            Logout
+                    </Button> : <Button variant="outline-primary">
+                            <NavLink exact className="active_class login_btn" to="/login">
+                                <span className="fa fa-sign-in fa-lg mr-2"></span>
+                            Login
                         </NavLink>
-                    </Button>
+                        </Button>}
                 </Nav>
             </Navbar.Collapse>
         </Navbar>

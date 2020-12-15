@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Container, Row, Col, Card, Accordion } from 'react-bootstrap';
+import { Container, Row, Col, Card, Accordion,Media,Button } from 'react-bootstrap';
 import axiosInstance from '../helpers/axios';
 import { postFetch } from '../Redux/actions/postActions';
 import { Stagger } from 'react-animation-components';
 import "./schemes-style.css";
+import Moment from 'react-moment';
 
 const Notice = () => {
     const dispatch = useDispatch();
@@ -27,15 +28,24 @@ const Notice = () => {
                         </Accordion.Toggle>
                         <Accordion.Collapse eventKey={data._id}>
                             <Card.Body>
-                                <Col className="text-center">
-                                    <h6 className="">{data.type}</h6>
-                                    <h6 className="mt-2">{data.date.toString()}</h6>
-                                    <h6 className="mt-2">{data.time}</h6>
-                                    <h6 className="mt-2">{data.description}</h6>
-                                    <h6 className="mt-2">{data.teacher}</h6>
-                                    <a href={data.weblink} className="mt-2 text-decoration-none font-italic" target="blank">Click here to prepare yourself.</a>
-
-                                </Col>
+                            <Media tag="li">
+                                        <img
+                                            width={200}
+                                            height={200}
+                                            className="mr-3 img-thumbnail rounded"
+                                            src={data.picture}
+                                            alt={data.subject}
+                                        />
+                                        <Media.Body className="ml-auto text-left">
+                                            <p><b>Notification type:</b>{data.type}</p>
+                                            <p><b>Description:</b>{data.description}</p>
+                                            <p><b>Date:</b> {data.date}</p>
+                                            <p><b>Time:</b>{data.time}</p>
+                                            <p><b>Teacher:</b>{data.teacher}</p>
+                                            <p><b>Time:</b>{data.time}</p>
+                                            <Button href={data.weblink} target="blank" className="mr-auto">Learn More</Button>
+                                        </Media.Body>
+                                    </Media>
                             </Card.Body>
                         </Accordion.Collapse>
                     </Accordion>

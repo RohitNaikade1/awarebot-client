@@ -1,37 +1,35 @@
 const Result=require("../schemas/resultSchema");
 
 exports.AddRecord=(req,res)=>{
-    // console.log(req.body);
     const ID=req.body.ID;
     const month=req.body.month;
     const JavaCount=req.body.JavaCount;
     const CPPCount=req.body.CPPCount;
     const DSCount=req.body.DSCount;
-    const data=new Result({
-        ID,
-        month,
-        JavaCount,
-        CPPCount,
-        DSCount
-    });
-    console.log(data)
-    // Result.insertMany(data,(err,data)=>{
-    //     return res.status(200).json({
-    //         msg:"success"
-    //     })
-    // })
-    data.save((error,data)=>{
-        if (error) {
-            return res.status(400).json({
-                message: error
-            });
+
+    Result.findOneAndUpdate({
+        ID:ID
+    },{
+        $set:{
+          ID:ID,
+          month:month,
+          JavaCount:JavaCount,
+          CPPCount:CPPCount,
+          DSCount:DSCount  
         }
-        if (data) {
+    },
+    function (err, data) {
+        if (err) {
+            return res.status(500).json({
+                error: err
+            })
+        } else if (data) {
             return res.status(200).json({
-                data: data
+                message: "records updated successfully!"
             });
         }
-    })
+    }
+    )
 }
 
 exports.fetchRecord=(req,res)=>{

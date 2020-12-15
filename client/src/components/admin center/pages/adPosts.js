@@ -2,11 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Sidebar from '../Sidebar';
 import { Modal, ModalHeader, ModalBody, Label } from 'reactstrap';
-import { Container, Row, Col, Card, Accordion, Button, Form } from 'react-bootstrap';
+import { Container, Row, Col, Card, Accordion,Media, Button, Form } from 'react-bootstrap';
 import axiosInstance from '../../helpers/axios';
 import { postFetch } from '../../Redux/actions/postActions';
 import { BsPlusCircle, BsPencilSquare } from "react-icons/bs";
-import { MdDelete } from "react-icons/md";
 import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 import './pages.css';
 import { Control, LocalForm, Errors } from 'react-redux-form';
@@ -15,6 +14,9 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { store } from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
 import 'animate.css';
+import { format } from 'date-fns';
+import { Redirect } from 'react-router';
+import { isAuth } from '../../helpers/auth';
 
 const required = (val) => val && val.length;
 const validURL = (val) => /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/i.test(val);
@@ -29,6 +31,7 @@ function AdRevenueReceipt() {
     const [weblink, setWeblink] = useState();
     const [date, setDate] = useState(null);
     const [time, setTime] = useState();
+    const [picture, setPicture] = useState();
 
     const dispatch = useDispatch();
     useEffect(() => {
@@ -68,18 +71,25 @@ function AdRevenueReceipt() {
                         </Accordion.Toggle>
                         <Accordion.Collapse eventKey={data._id}>
                             <Card.Body>
-                                <Col className="text-center">
-                                    <h6 className="">{data.type}</h6>
-                                    <h6 className="mt-2">{data.date}</h6>
-                                    <h6 className="mt-2">{data.time}</h6>
-                                    <h6 className="mt-2">{data.description}</h6>
-                                    <h6 className="mt-2">{data.teacher}</h6>
-                                    <a href={data.weblink} className="mt-2 text-decoration-none font-italic" target="blank">Click here to prepare yourself.</a>
-
-                                </Col>
-                                <div className="mt-4">
-                                    <MdDelete className="ml-3 icons" onClick={((e) => deletePost(data._id))} size={30} />
-                                </div>
+                            <Media tag="li">
+                                        <img
+                                            width={200}
+                                            height={200}
+                                            className="mr-3 img-thumbnail rounded"
+                                            src={data.picture}
+                                            alt={data.subject}
+                                        />
+                                        <Media.Body className="ml-auto text-left">
+                                            <p><b>Notification type:</b>  {data.type}</p>
+                                            <p><b>Description:</b>  {data.description}</p>
+                                            <p><b>Date:</b>  {data.date}</p>
+                                            <p><b>Time:</b>  {data.time}</p>
+                                            <p><b>Teacher:</b>  {data.teacher}</p>
+                                            <p><b>Time:</b>  {data.time}</p>
+                                            <Button href={data.weblink} target="blank" className="mr-auto">Learn More</Button>
+                                            <Button variant="danger" onClick={((e) => deletePost(data._id))} className="mr-auto ml-2">Delete</Button>
+                                        </Media.Body>
+                                    </Media>
                             </Card.Body>
 
                         </Accordion.Collapse>
@@ -89,13 +99,15 @@ function AdRevenueReceipt() {
         })
     }
     const submitPost = (values) => {
+        const dt=format(date,'dd/MM/yyyy')
         const postData = {
             subject,
             type,
             teacher,
             description,
             weblink,
-            date,
+            picture,
+            dt,
             time
         }
         console.log(postData);
@@ -118,6 +130,7 @@ function AdRevenueReceipt() {
         setIsModalOpen(!isModalOpen);
     }
     return (
+        isAuth() ? isAuth().role === 'admin'|| isAuth().role === 'instructor'? 
         <Container fluid className="m-0 p-0">
             <Modal isOpen={isModalOpen} toggle={toggleModal}>
                 <ModalHeader toggle={toggleModal}><BsPencilSquare className="mr-2" />Add Post.</ModalHeader>
@@ -160,7 +173,7 @@ function AdRevenueReceipt() {
                                     custom
                                     value={type}
                                     defaultInputValue="Lecture update."
-                                    onBlur={(e) => setType(e.target.value)}
+                                    onChange={(e) => setType(e.target.value)}
                                 >
                                     <option value="Lecture update.">Lecture Update.</option>
                                     <option value="Office Notice.">Office Notice.</option>
@@ -252,6 +265,7 @@ function AdRevenueReceipt() {
                                         model=".description"
                                         className="form-control"
                                         autocomplete="off"
+                                        rows={6}
                                         placeholder="Enter description"
                                         name="description"
                                         value={description}
@@ -298,6 +312,32 @@ function AdRevenueReceipt() {
                                         />
                                     </Col></Row>
                             </div></Col></Row>
+                            <div className="form-group">
+                            <Row><Col className="col-md-3 offset-md-1"><Form.Label>Picture:</Form.Label></Col>
+                                <Col className="col-md-7">
+                                    <Control.text
+                                        model=".picture"
+                                        className="form-control"
+                                        autoComplete="off"
+                                        placeholder="Enter picture URL:"
+                                        name="picture"
+                                        value={picture}
+                                        onChange={(e) => setPicture(e.target.value)}
+                                        validators={{
+                                            required, validURL
+                                        }}
+                                    />
+                                    <Errors
+                                        className="text-danger"
+                                        model=".picture"
+                                        show="touched"
+                                        messages={{
+                                            required: 'Required ',
+                                            validURL: 'Enter a valid URL!'
+                                        }}
+                                    />
+                                </Col></Row>
+                        </div>
                         <Row className="text-center float-right mt-4">
                             <Col><Button variant="primary" className="mr-3" type="submit">Create</Button>
                                 <Button variant="danger" onClick={toggleModal}>Cancel</Button></Col>
@@ -318,7 +358,8 @@ function AdRevenueReceipt() {
                     </Stagger>
                 </Col>
             </Row>
-        </Container>
+        </Container>:isAuth().role === 'student'?<Redirect to="/"/> 
+        :<Redirect to="/"/> : <Redirect to="/login"/>
     )
 }
 

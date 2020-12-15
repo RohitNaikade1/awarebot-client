@@ -10,48 +10,47 @@ const Population = () => {
     useEffect(()=>{
             dispatch((resultFetch()));  
     },[])
-    const Record=useSelector((state)=>state.chartsData);
+    const Record=useSelector((state)=>state.charts);
     console.log(Record)
-    // const data = {
-    //     labels: Record.popYears,
-    //     datasets: [
-    //         {
-    //             label: "Men",
-    //             data: Record.popMenCount,
-    //             backgroundColor: "#a6dcef"
-    //         },
-    //         {
-    //             label: "Women",
-    //             data: Record.popWomenCount,
-    //             backgroundColor: "#fe7171"
-    //         },
-    //         {
-    //             label: "Children",
-    //             data: Record.popChildrenCount,
-    //             backgroundColor: "#d2e603"
-    //         }
-    //     ]
-    // }
+    const data = {
+        labels: Record.resMonth,
+        datasets: [
+            {
+                label: "Java Programming",
+                data: Record.resJavaCount,
+                backgroundColor: "#bedcfa"
+            },
+            {
+                label: "C++ Programming",
+                data: Record.resCPPCount,
+                backgroundColor: "#fe7171"
+            },
+            {
+                label: "Data Structures",
+                data: Record.resDSACount,
+                backgroundColor: "#d2e603"
+            }
+        ]
+    }
     return (
-        // <FadeTransform
-        //     in
-        //     transformProps={{
-        //         exitTransform: 'scale(0.5) translateY(-50%)'
-        //     }}>
-        // <Card className="col-md-11">
-        //     <Card.Title className="text-center mt-3"><h2>Population from last 5 Surveys.</h2></Card.Title>
-        //     <Card.Body className="mt-2">
-        //         <Bar
-        //             data={data}
-        //             options={
-        //                 {
-        //                     tooltips: { mode: "index" },
-        //                 }
-        //             } />
-        //     </Card.Body>
-        // </Card>
-        // </FadeTransform>
-        <div></div>
+        <FadeTransform
+            in
+            transformProps={{
+                exitTransform: 'scale(0.5) translateY(-50%)'
+            }}>
+        <Card className="col-md-11">
+            <Card.Title className="text-center mt-3"><h2>Batch wise Results in mast 5 months.</h2></Card.Title>
+            <Card.Body className="mt-2">
+                <Bar
+                    data={data}
+                    options={
+                        {
+                            tooltips: { mode: "index" },
+                        }
+                    } />
+            </Card.Body>
+        </Card>
+        </FadeTransform>
     );
 }
 
