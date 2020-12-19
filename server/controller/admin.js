@@ -1,13 +1,15 @@
-const Admin=require("../schemas/adminSchema");
+const Admin = require("../schemas/adminSchema");
+const _ = require('lodash');
 
-exports.addAdmin=(req,res)=>{
-    const email=req.body.email;
-    const password=req.body.password;
-    const data=new Admin({
-       email,
-       password
+exports.addAdmin = (req, res) => {
+    const email1 = req.body.email;
+    const email=email1.toLowerCase();
+    const password = req.body.password;
+    const data = new Admin({
+        email,
+        password
     });
-    data.save((error,data)=>{
+    data.save((error, data) => {
         if (error) {
             return res.status(400).json({
                 message: error
@@ -21,23 +23,20 @@ exports.addAdmin=(req,res)=>{
     })
 }
 
-exports.updateAdmin=(req,res)=>{
-    const email=req.body.email;
-    const password=req.body.password;
-    Admin.updateOne({email:email},{
-        $set:{
-            password:password
-        }
-    },function(error,data){
-        if (error) {
+exports.updateAdmin = (req, res) => {
+    const email1 = req.body.email;
+    const email=email1.toLowerCase();
+    const password1 = req.body.password;
+    const uemail1 = req.body.uemail;
+    const uemail=uemail1.toLowerCase();
+    Admin.findOne({ email: email }, function (error, user) {
+        if (!user) {
             return res.status(400).json({
-                message: error
+                error: "Admin with this email not exist!"
             });
-        }
-        if (data) {
-            return res.status(200).json({
-                data: "password updated successfully!"
-            });
+        } else {
+            
         }
     })
+
 }
