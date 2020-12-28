@@ -22,7 +22,7 @@ exports.AddRecord=(req,res)=>{
     function (err, data) {
         if (err) {
             return res.status(500).json({
-                error: err
+                error: "Error while updating data"
             })
         } else if (data) {
             return res.status(200).json({

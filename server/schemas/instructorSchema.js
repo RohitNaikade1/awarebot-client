@@ -1,0 +1,39 @@
+const mongoose=require("mongoose");
+
+const instructorSchema=new mongoose.Schema({
+    name:{
+        type:String,
+        trim:true
+    },
+    batch:{
+        type:String,
+        required:true
+    },
+    education:{
+        type:String,
+        required:true
+    },
+    picture:{
+        type:String,
+        required:true
+    },
+    instagram:{
+        type:String,
+        required:true
+    },
+    facebook:{
+        type:String,
+        required:true
+    },
+    github:{
+        type:String,
+        required:true
+    },
+    email:{
+        type:String,
+        required:true
+    }
+},{
+    timestamps:true
+});
+module.exports=mongoose.model('instructor',instructorSchema);

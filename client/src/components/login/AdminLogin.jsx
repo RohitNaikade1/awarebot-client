@@ -79,7 +79,7 @@ const Register = () => {
                 <Form.Group controlId="formGroupEmail">
                   <Row><Col className="col-md-3 offset-md-1"><Form.Label>Email Id:</Form.Label></Col>
                     <Col className="col-md-7">
-                      <Control.text
+                      <Control.Text
                         type="email"
                         model=".email"
                         autoComplete="off"
@@ -107,7 +107,7 @@ const Register = () => {
                   <Form.Group controlId="formGroupPassword">
                     <Row><Col className="col-md-3 offset-md-1"><Form.Label>Password:</Form.Label></Col>
                       <Col className="col-md-7">
-                        <Control.text
+                        <Control.Text
                           type="password"
                           model=".password"
                           autoComplete="off"

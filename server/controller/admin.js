@@ -35,7 +35,23 @@ exports.updateAdmin = (req, res) => {
                 error: "Admin with this email not exist!"
             });
         } else {
-            
+            const updatedFields = {
+                password: password1,
+                email: uemail
+            }
+            user = _.extend(user, updatedFields);
+
+            user.save((err, result) => {
+                if (err) {
+                    console.log(err)
+                    return res.status(400).json({
+                        error: 'Error resetting user password'
+                    });
+                }
+                res.json({
+                    message: `Password updated successfully! `
+                });
+            });
         }
     })
 

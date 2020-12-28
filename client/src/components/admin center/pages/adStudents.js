@@ -1,0 +1,455 @@
+import React, { useState } from 'react';
+import Sidebar from '../Sidebar';
+import { Container, Row, Card, Col, Form, Button } from 'react-bootstrap';
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
+import axiosInstance from '../../helpers/axios';
+import { store } from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css';
+import 'animate.css';
+import { Control, LocalForm, Errors } from 'react-redux-form';
+import { Redirect } from 'react-router';
+import { isAuth } from '../../helpers/auth';
+
+const required = (val) => val && val.length;
+const minLength = (len) => (val) => val && (val.length >= len);
+const validEmail = (val) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
+
+function AdStudents() {
+
+    const [studentMail, setStudentMail] = useState();
+    const [password, setPassword] = useState();
+    const [repeatPassword, setRepeatPassword] = useState();
+    const [batch, setBatch] = useState();
+
+    const AddBatch = () => {
+        if (password === repeatPassword) {
+            const regData = {
+                emails: studentMail,
+                password: password,
+                batch: batch
+            }
+            console.log(regData)
+            axiosInstance.post('batch/addBatch', regData)
+                .then(res => {
+                    store.addNotification({
+                        title: `${res.data.message}`,
+                        message: 'Now you can use admin credentials!',
+                        type: "success",
+                        container: 'top-right',
+                        animationIn: ["animated", "fadeIn"],
+                        animationOut: ["animated", "fadeOut"],
+                        dismiss: {
+                            duration: 3000,
+                            showIcon: true
+                        }
+                    })
+                    window.location.reload(false);
+                })
+                .catch(err => {
+                    console.log(err.response)
+                    store.addNotification({
+                        title: `${err.response.data.error}`,
+                        message: 'Try again with valid credentials!',
+                        type: "warning",
+                        container: 'top-right',
+                        animationIn: ["animated", "fadeIn"],
+                        animationOut: ["animated", "fadeOut"],
+                        dismiss: {
+                            duration: 3000,
+                            showIcon: true
+                        }
+                    })
+                    window.location.reload(false);
+                })
+        } else {
+            store.addNotification({
+                title: "Passwords are not identical",
+                message: "Enter similar passwords!",
+                type: "warning",
+                container: 'top-right',
+                animationIn: ["animated", "fadeIn"],
+                animationOut: ["animated", "fadeOut"],
+                dismiss: {
+                    duration: 5000,
+                    showIcon: true
+                }
+            })
+        }
+    }
+    const updatePassword = () => {
+        if (password === repeatPassword) {
+            const regData = {
+                batch: batch,
+                studentPassword: password
+            }
+            axiosInstance.post('batch/update', regData)
+                .then(res => {
+                    store.addNotification({
+                        title: `${res.data.message}`,
+                        message: 'Now you can use updated credentials!',
+                        type: "success",
+                        container: 'top-right',
+                        animationIn: ["animated", "fadeIn"],
+                        animationOut: ["animated", "fadeOut"],
+                        dismiss: {
+                            duration: 3000,
+                            showIcon: true
+                        }
+                    })
+                    window.location.reload(false);
+                })
+                .catch(err => {
+                    console.log(err)
+                    store.addNotification({
+                        title: `${err.response.data.error}`,
+                        message: 'Try again with valid credentials!',
+                        type: "warning",
+                        container: 'top-right',
+                        animationIn: ["animated", "fadeIn"],
+                        animationOut: ["animated", "fadeOut"],
+                        dismiss: {
+                            duration: 3000,
+                            showIcon: true
+                        }
+                    })
+                    window.location.reload(false);
+                })
+        } else {
+            store.addNotification({
+                title: "Passwords are not identical",
+                message: "Enter similar passwords!",
+                type: "warning",
+                container: 'top-right',
+                animationIn: ["animated", "fadeIn"],
+                animationOut: ["animated", "fadeOut"],
+                dismiss: {
+                    duration: 5000,
+                    showIcon: true
+                }
+            })
+        }
+    }
+
+    const addEmail = () => {
+        const regData = {
+            batch: batch,
+            email: studentMail
+        }
+        axiosInstance.post('batch/addEmail', regData)
+            .then(res => {
+                store.addNotification({
+                    title: `${res.data.message}`,
+                    message: `${studentMail} now has access of batch notifications`,
+                    type: "success",
+                    container: 'top-right',
+                    animationIn: ["animated", "fadeIn"],
+                    animationOut: ["animated", "fadeOut"],
+                    dismiss: {
+                        duration: 3000,
+                        showIcon: true
+                    }
+                })
+                window.location.reload(false);
+            })
+            .catch(err => {
+                store.addNotification({
+                    title: `${err.response.data.error}`,
+                    message: 'Try again with valid data!',
+                    type: "warning",
+                    container: 'top-right',
+                    animationIn: ["animated", "fadeIn"],
+                    animationOut: ["animated", "fadeOut"],
+                    dismiss: {
+                        duration: 3000,
+                        showIcon: true
+                    }
+                })
+                window.location.reload(false);
+            })
+    }
+
+    const removeEmail = () => {
+        const regData = {
+            batch: batch,
+            email: studentMail
+        }
+        axiosInstance.post('batch/deleteEmail', regData)
+            .then(res => {
+                store.addNotification({
+                    title: `${res.data.message}`,
+                    message: `${studentMail} now has no access of batch notifications`,
+                    type: "success",
+                    container: 'top-right',
+                    animationIn: ["animated", "fadeIn"],
+                    animationOut: ["animated", "fadeOut"],
+                    dismiss: {
+                        duration: 3000,
+                        showIcon: true
+                    }
+                })
+                window.location.reload(false);
+            })
+            .catch(err => {
+                store.addNotification({
+                    title: `${err.response.data.error}`,
+                    message: 'Try again with valid data!',
+                    type: "warning",
+                    container: 'top-right',
+                    animationIn: ["animated", "fadeIn"],
+                    animationOut: ["animated", "fadeOut"],
+                    dismiss: {
+                        duration: 3000,
+                        showIcon: true
+                    }
+                })
+                window.location.reload(false);
+            })
+    }
+    const deleteBatch = () => {
+        if (password === repeatPassword) {
+            const regData = {
+                batch: batch
+            }
+            axiosInstance.post('batch/deleteBatch', regData)
+                .then(res => {
+                    store.addNotification({
+                        title: `${res.data.message}`,
+                        message: 'You can create new batch!',
+                        type: "success",
+                        container: 'top-right',
+                        animationIn: ["animated", "fadeIn"],
+                        animationOut: ["animated", "fadeOut"],
+                        dismiss: {
+                            duration: 3000,
+                            showIcon: true
+                        }
+                    })
+                    window.location.reload(false);
+                })
+                .catch(err => {
+                    store.addNotification({
+                        title: `${err.response.data.error}`,
+                        message: 'Try again with valid credentials!',
+                        type: "warning",
+                        container: 'top-right',
+                        animationIn: ["animated", "fadeIn"],
+                        animationOut: ["animated", "fadeOut"],
+                        dismiss: {
+                            duration: 3000,
+                            showIcon: true
+                        }
+                    })
+                    window.location.reload(false);
+                })
+        } else {
+            store.addNotification({
+                title: "Passwords are not identical",
+                message: "Enter similar passwords!",
+                type: "warning",
+                container: 'top-right',
+                animationIn: ["animated", "fadeIn"],
+                animationOut: ["animated", "fadeOut"],
+                dismiss: {
+                    duration: 5000,
+                    showIcon: true
+                }
+            })
+        }
+    }
+    return (
+        isAuth() ? isAuth().role === 'admin' ?
+            <Container fluid className="m-0 p-0">
+                <Row className="d-flex">
+                    <Col className="col-md-3">
+                        <Sidebar />
+                    </Col>
+                    <Col className="col-md-7 mt-5 mb-3 text-center">
+                        <h1>Students Section.</h1>
+                        <Card className="mt-5">
+                            <Card.Header>Student Credentials.</Card.Header>
+                            <Card.Body className="col-md-12 d-flex justify-content-md-center">
+                                <LocalForm>
+                                    <Row className="col-md-12">
+                                        <Col className="col-md-5">
+                                            <Form.Label>Batch</Form.Label>
+                                        </Col>
+                                        <Col className="col-md-7">
+                                            <Control.Text type="text"
+                                                placeholder="Enter Batch Name"
+                                                autoComplete="off"
+                                                className="form-control"
+                                                model=".batch"
+                                                value={batch}
+                                                onChange={(e) => setBatch(e.target.value)}
+                                                validators={{
+                                                    required
+                                                }}
+                                            />
+                                            <Errors
+                                                className="text-danger"
+                                                model=".batch"
+                                                show="touched"
+                                                messages={{
+                                                    required: 'Required '
+                                                }}
+                                            />
+                                        </Col>
+                                    </Row>
+                                    <Row className="col-md-12 mt-3">
+                                        <Col className="col-md-5">
+                                            <Form.Label>Student Email</Form.Label>
+                                        </Col>
+                                        <Col className="col-md-7">
+                                            <Control.Text type="text"
+                                                placeholder="Enter Email ID"
+                                                autoComplete="off"
+                                                className="form-control"
+                                                model=".email"
+                                                value={studentMail}
+                                                onChange={(e) => setStudentMail(e.target.value)}
+                                                validators={{
+                                                    required, validEmail
+                                                }}
+                                            />
+                                            <Errors
+                                                className="text-danger"
+                                                model=".email"
+                                                show="touched"
+                                                messages={{
+                                                    required: 'Required ',
+                                                    validEmail: 'Enter a valid email address!'
+                                                }}
+                                            />
+                                        </Col>
+                                    </Row>
+                                    <Row className="col-md-12 mt-3">
+                                        <Col className="col-md-5">
+                                            <Form.Label>Student Password</Form.Label>
+                                        </Col>
+                                        <Col className="col-md-7">
+                                            <Control.Text
+                                                type="password"
+                                                model=".password"
+                                                className="form-control"
+                                                placeholder="Enter Password"
+                                                autoComplete="off"
+                                                value={password}
+                                                onChange={e => setPassword(e.target.value)}
+                                                validators={{
+                                                    required, minLength: minLength(8)
+                                                }}
+                                            />
+                                            <Errors
+                                                className="text-danger"
+                                                model=".password"
+                                                show="touched"
+                                                messages={{
+                                                    required: 'Required ',
+                                                    minLength: 'Password should be greater than 8 characters!'
+                                                }}
+                                            />
+                                        </Col>
+                                    </Row>
+                                    <Row className="col-md-12 mt-3">
+                                        <Col className="col-md-5">
+                                            <Form.Label>Confirm Password</Form.Label>
+                                        </Col>
+                                        <Col className="col-md-7">
+                                            <Control.Text
+                                                type="password"
+                                                placeholder="Confirm Password"
+                                                className="form-control"
+                                                autoComplete="off"
+                                                model=".rpassword"
+                                                value={repeatPassword}
+                                                onChange={e => setRepeatPassword(e.target.value)}
+                                                validators={{
+                                                    required, minLength: minLength(8)
+                                                }}
+                                            />
+                                            <Errors
+                                                className="text-danger"
+                                                model=".rpassword"
+                                                show="touched"
+                                                messages={{
+                                                    required: 'Required ',
+                                                    minLength: 'Password should be greater than 8 characters!'
+                                                }}
+                                            />
+                                        </Col>
+                                    </Row>
+                                    <Button className="mt-4" type="submit" onClick={AddBatch}>Add Batch</Button>
+                                    <Button className="mt-4 ml-2 btn-success" type="submit" onClick={updatePassword}>Update Password</Button>
+                                    <Button className="mt-4 ml-2 btn-danger" type="submit" onClick={deleteBatch}>Delete Batch</Button>                                </LocalForm>
+                            </Card.Body>
+                        </Card>
+                        <Card className="mt-5">
+                            <Card.Header>Add/Remove Students.</Card.Header>
+                            <Card.Body className="col-md-12 d-flex justify-content-md-center">
+                                <LocalForm>
+                                <Row className="col-md-12">
+                                        <Col className="col-md-5">
+                                            <Form.Label>Batch</Form.Label>
+                                        </Col>
+                                        <Col className="col-md-7">
+                                            <Control.Text type="text"
+                                                placeholder="Enter Batch Name"
+                                                autoComplete="off"
+                                                className="form-control"
+                                                model=".batch"
+                                                value={batch}
+                                                onChange={(e) => setBatch(e.target.value)}
+                                                validators={{
+                                                    required
+                                                }}
+                                            />
+                                            <Errors
+                                                className="text-danger"
+                                                model=".batch"
+                                                show="touched"
+                                                messages={{
+                                                    required: 'Required '
+                                                }}
+                                            />
+                                        </Col>
+                                    </Row>
+                                    <Row className="col-md-12 mt-3">
+                                        <Col className="col-md-5">
+                                            <Form.Label>Student Email</Form.Label>
+                                        </Col>
+                                        <Col className="col-md-7">
+                                            <Control.Text type="text"
+                                                placeholder="Enter Email ID"
+                                                autoComplete="off"
+                                                className="form-control"
+                                                model=".email"
+                                                value={studentMail}
+                                                onChange={(e) => setStudentMail(e.target.value)}
+                                                validators={{
+                                                    required, validEmail
+                                                }}
+                                            />
+                                            <Errors
+                                                className="text-danger"
+                                                model=".email"
+                                                show="touched"
+                                                messages={{
+                                                    required: 'Required ',
+                                                    validEmail: 'Enter a valid email address!'
+                                                }}
+                                            />
+                                        </Col>
+                                    </Row>
+                                    <Button className="mt-4" type="submit" onClick={addEmail}>Add</Button>
+                                    <Button className="mt-4 ml-2 btn-danger" type="submit" onClick={removeEmail}>Remove</Button>
+                                </LocalForm>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                </Row>
+            </Container > : isAuth().role === 'student' || isAuth().role === 'instructor' ? <Redirect to="/" />
+                : <Redirect to="/" /> : <Redirect to="/login" />
+    )
+}
+
+export default AdStudents;

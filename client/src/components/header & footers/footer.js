@@ -17,10 +17,13 @@ class Footer extends Component{
                             <NavLink exact activeClassName="active_class" className="links" to="/">
                                 <li><span className="fa fa-home fa-md mr-2"></span>Home.</li>
                             </NavLink>
+                            <NavLink exact activeClassName="active_class" className="links" to="/about">
+                                <li><span className="fa fa-home fa-md mr-2"></span>About Visionware.</li>
+                            </NavLink>
                             <NavLink exact activeClassName="active_class" className="links" to="/notice">
                                 <li><span className="fa fa-file-text fa-md mr-2"></span>Notice Board.</li>
                             </NavLink>
-                            <NavLink exact activeClassName="active_class" className="links" to="/admin">
+                            <NavLink exact activeClassName="active_class" className="links" to="/adHome">
                             <li><span className="fa fa-unlock-alt fa-md mr-2"></span>Admin Section.</li>
                             </NavLink>
                        </ul>

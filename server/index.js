@@ -11,10 +11,14 @@ const AttendenceRouter=require("./routes/attendenceRouter");
 const postRouter=require("./routes/postRouter");
 const studentRouter=require("./routes/studentRouter");
 const authRouter=require("./routes/authRouter");
+const instructorRouter=require("./routes/instructorRouter");
+const posterRouter=require("./routes/posterRouter");
+const fileUpload=require('express-fileupload')
 const app=express();
 
 app.use(cors());
 app.use(express.json());
+app.use(fileUpload());
 const port=process.env.port || 5000;
 
 mongoose.connect("mongodb+srv://AwareBot:AwareBot.123@cluster0.na6cy.mongodb.net/AwareBot?retryWrites=true&w=majority",
@@ -23,7 +27,8 @@ mongoose.connect("mongodb+srv://AwareBot:AwareBot.123@cluster0.na6cy.mongodb.net
      useFindAndModify: false },()=>{
     console.log("Connected to DB");
 });
-
+app.use('/instructor', express.static('controller/images/instructor'));
+app.use('/poster', express.static('controller/images/poster'));
 app.use('/result',resultRouter);
 app.use('/attendence',AttendenceRouter);
 app.use('/timetable',timeRouter);
@@ -33,6 +38,8 @@ app.use('/post',postRouter);
 app.use('/creds',credRouter);
 app.use('/batch',BatchRouter);
 app.use('/auth',authRouter);
+app.use('/instructor',instructorRouter);
+app.use('/poster',posterRouter);
 app.use(bodyParser.urlencoded({ extended: false }))
 
 // parse application/json

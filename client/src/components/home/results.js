@@ -11,7 +11,7 @@ const Population = () => {
             dispatch((resultFetch()));  
     },[])
     const Record=useSelector((state)=>state.charts);
-    console.log(Record)
+    // console.log(Record)
     const data = {
         labels: Record.resMonth,
         datasets: [

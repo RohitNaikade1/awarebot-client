@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Student from './login/studentLogin';
+import Student from './login/userLogin';
 import Admin from './login/AdminLogin';
 import './login/login.css'
 import { Container,Row,Col } from 'react-bootstrap';

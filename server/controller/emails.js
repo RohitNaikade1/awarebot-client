@@ -1,10 +1,12 @@
 const Emails=require("../schemas/emailsSchema");
+const _ = require('lodash');
 
 exports.addBatch=(req,res)=>{
-    // console.log(req.body);
-    const batch=req.body.batch;
+    const ibatch=req.body.batch;
+    const batch=ibatch.toLowerCase();
     const emails=req.body.emails;
-    const studentPassword=req.body.studentPassword;
+    const studentPassword=req.body.password;
+    console.log("reached")
     const data=new Emails({
         batch,
         emails,
@@ -12,13 +14,14 @@ exports.addBatch=(req,res)=>{
     });
     data.save((error,data)=>{
         if (error) {
+            console.log(error)
             return res.status(400).json({
-                message: error
+                error: error
             });
         }
         if (data) {
             return res.status(200).json({
-                data: data
+                message: "Batch Added Successfully!"
             });
         }
     })
@@ -41,75 +44,107 @@ exports.fetchEmails=(req,res)=>{
 }
 
 exports.updateStudentPassword=(req,res)=>{
-    const batch=req.body.batch;
+    const ibatch=req.body.batch;
+    const batch=ibatch.toLowerCase();
     const studentPassword=req.body.studentPassword;
-    Emails.update({batch:batch},{
-        $set:{
-            studentPassword:studentPassword
-        }
-    },function (error, success) {
-        if (error) {
+    Emails.findOne({ batch: batch }, function (error, user) {
+        if (!user) {
             return res.status(400).json({
-                data: error
-            })
+                error: "Batch does not exists!"
+            });
         } else {
-            return res.status(200).json({
-                data: "password updated Successfully!"
-            })
+            const updatedFields = {
+                studentPassword: studentPassword
+            }
+            user = _.extend(user, updatedFields);
+
+            user.save((err, result) => {
+                if (err) {
+                    console.log(err)
+                    return res.status(400).json({
+                        error: 'Error resetting user password'
+                    });
+                }else{
+                    return res.status(200).json({
+                        message: 'Student password updated successfully!'
+                    });
+                }
+            });
         }
     })
 }
 
 exports.addEmail=(req,res)=>{
-    const batch=req.body.batch;
-    const emails=req.body.emails;
-    Emails.update({batch:batch},{
-        $push:{
-            emails:emails
-        }
-    },function (error, success) {
-        if (error) {
+    const ibatch=req.body.batch;
+    const batch=ibatch.toLowerCase();
+    const email=req.body.email;
+    Emails.findOne({ batch: batch }, function (error, user) {
+        if (!user) {
             return res.status(400).json({
-                data: error
-            })
+                error: "Batch does not exists!"
+            });
         } else {
-            return res.status(200).json({
-                data: "Emails updated successfully!"
+            Emails.updateOne({batch:batch},{
+                $push:{
+                    emails:email
+                }
+            },function (error, success) {
+                if (error) {
+                    return res.status(400).json({
+                        error: "error while updating email database"
+                    })
+                } else {
+                    return res.status(200).json({
+                        message: "Emails updated successfully!"
+                    })
+                }
             })
         }
     })
+
+    
 }
 
 exports.deleteEmail=(req,res)=>{
-    const batch=req.body.batch;
-    const emails=req.body.emails;
-    Emails.update({batch:batch},{
-        $pull:{
-            emails:emails
-        }
-    },function (error, success) {
-        if (error) {
+    const ibatch=req.body.batch;
+    const batch=ibatch.toLowerCase();
+    const email=req.body.email;
+    Emails.findOne({ batch: batch }, function (error, user) {
+        if (!user) {
             return res.status(400).json({
-                data: error
-            })
+                error: "Batch does not exists!"
+            });
         } else {
-            return res.status(200).json({
-                data: "Email deleted Successfully!"
+            Emails.updateOne({batch:batch},{
+                $pull:{
+                    emails:email
+                }
+            },function (error, success) {
+                if (error) {
+                    return res.status(400).json({
+                        error: "error while deleting email database"
+                    })
+                } else {
+                    return res.status(200).json({
+                        message: "Email deleted successfully!"
+                    })
+                }
             })
         }
     })
 }
 
 exports.deleteBatch=(req,res)=>{
-    const batch=req.body.batch;
+    const ibatch=req.body.batch;
+    const batch=ibatch.toLowerCase();
     Emails.deleteOne({batch:batch},function (error, success) {
         if (error) {
             return res.status(400).json({
-                data: error
+                error: "error while deleting batch"
             })
         } else {
             return res.status(200).json({
-                data: "Batch deleted Successfully"
+                message: "Batch deleted Successfully"
             })
         }
     })

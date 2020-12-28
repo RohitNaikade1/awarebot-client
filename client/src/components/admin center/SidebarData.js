@@ -25,22 +25,23 @@ export const SidebarData = [
     cName: 'nav-text'
   },
   {
-    title: 'Credentials',
+    title: 'Admin Credentials',
     link: '/adCreds',
     icon: <ImIcons.ImKey />,
     cName: 'nav-text'
   }
-  // ,
-  // {
-  //   title: 'Residence Certificate',
-  //   link: '/adResidence',
-  //   icon: <FaIcons.FaCertificate />,
-  //   cName: 'nav-text'
-  // },
-  // {
-  //   title: 'Revenue Tax',
-  //   link: '/adRevenueReceipt',
-  //   icon: <GiIcons.GiMoneyStack />,
-  //   cName: 'nav-text'
-  // }
+  ,
+  {
+    title: 'Student Credentials',
+    link: '/adStudents',
+    icon: <FaIcons.FaIdBadge />,
+    cName: 'nav-text'
+  }
+  ,
+  {
+    title: 'Publish',
+    link: '/publish',
+    icon: <MdIcons.MdPublish />,
+    cName: 'nav-text'
+  }
 ];

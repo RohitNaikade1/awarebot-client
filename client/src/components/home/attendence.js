@@ -11,7 +11,7 @@ const Population = () => {
             dispatch((attendenceFetch()));  
     },[])
     const Record=useSelector((state)=>state.charts);
-    console.log(Record.attJavaCount)
+    // console.log(Record.attJavaCount)
     const data = {
         labels: Record.attMonth,
         datasets: [

@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Container, Row, Col, Card, Accordion,Media,Button } from 'react-bootstrap';
-import axiosInstance from '../helpers/axios';
 import { postFetch } from '../Redux/actions/postActions';
 import { Stagger } from 'react-animation-components';
 import "./schemes-style.css";
-import Moment from 'react-moment';
 
 const Notice = () => {
     const dispatch = useDispatch();

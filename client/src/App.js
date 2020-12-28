@@ -8,6 +8,8 @@ import Home from './components/home/home';
 import Admin from './components/admin center/admin';
 import adPosts from './components/admin center/pages/adPosts';
 import adCreds from './components/admin center/pages/adCredentials';
+import adStudents from './components/admin center/pages/adStudents';
+import adPublish from './components/admin center/pages/adPublish';
 import adStaff from './components/admin center/pages/adStaff';
 import Notice from './components/noticeboard/noticeboard';
 import adHome from './components/admin center/pages/adHome';
@@ -26,6 +28,7 @@ function App() {
         <Header />
         <Switch>
           <Route path="/" exact component={Home}></Route>
+          <Route path="/publish" exact component={adPublish}></Route>
           <Route path="/admin" component={Admin}></Route>
           <Route path="/notice" component={Notice}></Route>
           <Route path="/login" component={Login}></Route>
@@ -35,6 +38,7 @@ function App() {
           <Route path="/adStaff" component={adStaff}></Route>
           <Route path="/adHome" component={adHome}></Route>
           <Route path="/adCreds" component={adCreds}></Route>
+          <Route path="/adStudents" component={adStudents}></Route>
         </Switch>
         <Footer />
       </BrowserRouter>
