@@ -1,4 +1,3 @@
-import cookie from 'js-cookie';
 import history from '../helpers/history';
 
 // Set in localstorage

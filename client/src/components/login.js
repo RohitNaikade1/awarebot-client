@@ -49,6 +49,5 @@ class Loginpage extends Component{
            </Container>
         );
     }
-}
-
+} 
 export default Loginpage;

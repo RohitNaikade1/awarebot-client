@@ -4,31 +4,30 @@ import { Card } from 'react-bootstrap';
 import {useDispatch,useSelector} from 'react-redux';
 import {attendenceFetch} from '../Redux/actions/chartActions';
 import { FadeTransform } from 'react-animation-components';
-
+import "./home.css"
 const Population = () => {
     const dispatch=useDispatch()
     useEffect(()=>{
             dispatch((attendenceFetch()));  
-    },[])
+    })
     const Record=useSelector((state)=>state.charts);
-    // console.log(Record.attJavaCount)
     const data = {
         labels: Record.attMonth,
         datasets: [
             {
                 label: "Java Programming",
                 data: Record.attJavaCount,
-                backgroundColor: "#bedcfa"
+                backgroundColor: "#70af85"
             },
             {
                 label: "C++ programming",
                 data: Record.attCPPCount,
-                backgroundColor: "#fe7171"
+                backgroundColor: "#6155a6"
             },
             {
                 label: "Data Structures",
                 data: Record.attDSACount,
-                backgroundColor: "#d2e603"
+                backgroundColor: "#583d72"
             }
         ]
     }
@@ -39,13 +38,13 @@ const Population = () => {
                 exitTransform: 'scale(0.5) translateY(-50%)'
             }}>
         <Card className="col-md-11">
-            <Card.Title className="text-center mt-3"><h2>Batch wise attendence in last 5 months.</h2></Card.Title>
-            <Card.Body className="mt-2">
+            <Card.Title className="text-center mt-4"><h2 className="heads">Batch wise attendence in last 5 months.</h2></Card.Title>
+            <Card.Body className="mt-1">
                 <Bar
                     data={data}
                     options={
                         {
-                            tooltips: { mode: "index" },
+                            tooltips: { mode: "index" }
                         }
                     } />
             </Card.Body>

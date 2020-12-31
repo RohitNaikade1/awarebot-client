@@ -49,7 +49,6 @@ const Register = () => {
         window.location.reload(false);
       })
       .catch((err) => {
-        console.log(err.response)
         store.addNotification({
           title: `${err.response.data.warning}`,
           message: "Try again with valid credentials!",
@@ -79,7 +78,7 @@ const Register = () => {
                 <Form.Group controlId="formGroupEmail">
                   <Row><Col className="col-md-3 offset-md-1"><Form.Label>Email Id:</Form.Label></Col>
                     <Col className="col-md-7">
-                      <Control.Text
+                      <Control.text
                         type="email"
                         model=".email"
                         autoComplete="off"
@@ -107,7 +106,7 @@ const Register = () => {
                   <Form.Group controlId="formGroupPassword">
                     <Row><Col className="col-md-3 offset-md-1"><Form.Label>Password:</Form.Label></Col>
                       <Col className="col-md-7">
-                        <Control.Text
+                        <Control.text
                           type="password"
                           model=".password"
                           autoComplete="off"

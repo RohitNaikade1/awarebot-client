@@ -17,12 +17,13 @@ import 'animate.css';
 import { format } from 'date-fns';
 import { Redirect } from 'react-router';
 import { isAuth } from '../../helpers/auth';
+import Medias from 'react-media';
 
 const required = (val) => val && val.length;
 const validURL = (val) => /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/i.test(val);
 const validSentence = (val) => /\b((?!=|\,|\.).)+(.)\b/i.test(val);
 
-function AdRevenueReceipt() {
+function AdPosts() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [subject, setSubject] = useState();
     const [type, setType] = useState("Lecture update.");
@@ -67,7 +68,7 @@ function AdRevenueReceipt() {
                 <Card className="col-md-12 col-sm-12 mt-5">
                     <Accordion className="myAccordian" defaultActiveKey={activeKey}>
                         <Accordion.Toggle as={Card.Header} className="back" eventKey={data._id}>
-                            <h4>{data.subject}</h4>
+                            <h4 className="heads">{data.subject}</h4>
                         </Accordion.Toggle>
                         <Accordion.Collapse eventKey={data._id}>
                             <Card.Body>
@@ -75,7 +76,7 @@ function AdRevenueReceipt() {
                                         <img
                                             width={200}
                                             height={200}
-                                            className="mr-3 img-thumbnail rounded"
+                                            className="mr-3 img-thumbnail"
                                             src={data.picture}
                                             alt={data.subject}
                                         />
@@ -131,7 +132,9 @@ function AdRevenueReceipt() {
     }
     return (
         isAuth() ? isAuth().role === 'admin'|| isAuth().role === 'instructor'? 
-        <Container fluid className="m-0 p-0">
+        <Medias query="(min-width:1300px)">
+                {matches => {
+                    return matches ?<Container fluid className="m-0 p-0">
             <Modal isOpen={isModalOpen} toggle={toggleModal}>
                 <ModalHeader toggle={toggleModal}><BsPencilSquare className="mr-2" />Add Post.</ModalHeader>
                 <ModalBody>
@@ -350,17 +353,26 @@ function AdRevenueReceipt() {
                     <Sidebar />
                 </Col>
                 <Col className="col-md-7 mt-5 mb-3 text-center">
-                    <h1>Post Section.</h1>
+                <FadeTransform
+                            in
+                            transformProps={{
+                                exitTransform: 'scale(0.3) translateY(-20%)'
+                            }}>
+                    <h1 className="titles">Post Section.</h1>
                     <Button className="mt-4 col-md-5" onClick={toggleModal}>
-                        <BsPlusCircle size={25} className="mr-3" />Add New Post</Button>
+                        <BsPlusCircle size={25} className="mr-3" />Add New Post</Button></FadeTransform>
                     <Stagger in>
                     <div>{cards}</div>
                     </Stagger>
                 </Col>
             </Row>
-        </Container>:isAuth().role === 'student'?<Redirect to="/"/> 
+        </Container>: <div>
+                            <h3 className="text-center mt-5 mb-5 titles">This Section is accessible only from Desktop resolutions.</h3>
+                        </div>;
+                }}
+            </Medias>:isAuth().role === 'student'?<Redirect to="/"/> 
         :<Redirect to="/"/> : <Redirect to="/login"/>
     )
 }
 
-export default AdRevenueReceipt;
+export default AdPosts;

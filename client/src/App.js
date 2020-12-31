@@ -12,18 +12,17 @@ import adStudents from './components/admin center/pages/adStudents';
 import adPublish from './components/admin center/pages/adPublish';
 import adStaff from './components/admin center/pages/adStaff';
 import Notice from './components/noticeboard/noticeboard';
-import adHome from './components/admin center/pages/adHome';
+import AdHome from './components/admin center/pages/adHome';
 import About from './components/about visionware/about';
-import Login from './components/login';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { Container } from 'react-bootstrap';
+import Loginpage from './components/login';
+import { Router, Route, Switch } from 'react-router-dom';
 import ReactNotification from 'react-notifications-component';
 import history from './components/helpers/history';
 
 function App() {
   return (
-    <>
-      <BrowserRouter history={history}>
+    <div className="app">
+      <Router history={history}>
       <ReactNotification />
         <Header />
         <Switch>
@@ -31,18 +30,18 @@ function App() {
           <Route path="/publish" exact component={adPublish}></Route>
           <Route path="/admin" component={Admin}></Route>
           <Route path="/notice" component={Notice}></Route>
-          <Route path="/login" component={Login}></Route>
+          <Route path="/login" component={Loginpage}></Route>
           <Route path="/adPosts" component={adPosts}></Route>
           <Route path="/about" component={About}></Route>
           <Route path="/adSchemes" component={Notice}></Route>
           <Route path="/adStaff" component={adStaff}></Route>
-          <Route path="/adHome" component={adHome}></Route>
+          <Route path="/adHome" component={AdHome}></Route>
           <Route path="/adCreds" component={adCreds}></Route>
           <Route path="/adStudents" component={adStudents}></Route>
         </Switch>
         <Footer />
-      </BrowserRouter>
-    </>
+      </Router>
+    </div>
   );
 }
 

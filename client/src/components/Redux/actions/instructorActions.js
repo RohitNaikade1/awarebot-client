@@ -5,7 +5,6 @@ export const instructorFetch=()=>{
     return async (dispatch)=>{
         const insData=await axiosInstance.get('instructor/read');
         const instructors=insData.data;
-        console.log(instructors)
         if(insData.status===200){
             dispatch({
                 type:constants.INSTRUCTOR_FETCH,

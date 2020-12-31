@@ -1,12 +1,12 @@
-import React,{useState} from "react";
+import React, { useState, useEffect } from "react";
 import loginImg from "./student.jpg";
 import './login.css';
-import { Row, Col, Card, Container, Button, Form } from 'react-bootstrap';
+import { Row, Col, Card, Container, Button, Form} from 'react-bootstrap';
 import axiosInstance from '../helpers/axios'
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import jwt from 'jsonwebtoken';
 import history from '../helpers/history';
-import {authenticate,isAuth} from '../helpers/auth';
+import { authenticate, isAuth } from '../helpers/auth';
 import { store } from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
 import 'animate.css';
@@ -19,53 +19,71 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [type, setType] = useState("Instructor");
-  
+  var data = "";
+  useEffect(() => {
+    axiosInstance.get('creds/fetch')
+      .then(res => {
+        data=res?.data?.data;
+      })
+      console.log(data)
+  })
+
+  const createSelectItems=()=> {
+    let items = [];         
+    for (let i = 0; i <= data.maxValue; i++) {     
+      console.log(data[i])        
+         items.push(<option key={i} value={data[i].batch}>{data[i].batch}</option>);   
+    }
+    return items;
+} 
+
+
   const handleSubmit = (values) => {
-    const resData={
+    const resData = {
       email,
       password,
-      batch:type
+      batch: type
     }
     console.log(resData)
-    axiosInstance.post('auth/signin',resData)
-    .then((data)=>{
-      let user = jwt.decode(data.data.data);
-      console.log(user)
-      authenticate(user,()=>{
-        isAuth() && isAuth().role === 'admin'
-              ? history.push('/admin')
-              : history.push('/');
-      });
-      store.addNotification({
-        title: `${user.email},welcome back!`,
-        message: 'Now you have privileges to explore!',
-        type: "success",
-        container: 'top-right',
-        animationIn: ["animated", "fadeIn"],
-        animationOut: ["animated", "fadeOut"],
-        dismiss: {
-          duration: 3000,
-          showIcon: true
-        }
+    axiosInstance.post('auth/signin', resData)
+      .then((data) => {
+        let user = jwt.decode(data.data.data);
+        console.log(user)
+        authenticate(user, () => {
+          isAuth() && isAuth().role === 'admin'
+            ? history.push('/admin')
+            : history.push('/');
+        });
+        store.addNotification({
+          title: `${user.email},welcome back!`,
+          message: 'Now you have privileges to explore!',
+          type: "success",
+          container: 'top-right',
+          animationIn: ["animated", "fadeIn"],
+          animationOut: ["animated", "fadeOut"],
+          dismiss: {
+            duration: 3000,
+            showIcon: true
+          }
+        })
+        window.location.reload(false);
       })
-      window.location.reload(false);
-    })
-    .catch((err)=>{
-      console.log(err.response)
-      store.addNotification({
-        title: `${err.response.data.warning}`,
-        message: "Try again with valid credentials!",
-        type: "warning",
-        container: 'top-right',
-        animationIn: ["animated", "fadeIn"],
-        animationOut: ["animated", "fadeOut"],
-        dismiss: {
-          duration: 5000,
-          showIcon: true
-        }
+      .catch((err) => {
+        console.log(err.response)
+        store.addNotification({
+          title: `${err.response.data.warning}`,
+          message: "Try again with valid credentials!",
+          type: "warning",
+          container: 'top-right',
+          animationIn: ["animated", "fadeIn"],
+          animationOut: ["animated", "fadeOut"],
+          dismiss: {
+            duration: 5000,
+            showIcon: true
+          }
+        })
+        window.location.reload(false);
       })
-      window.location.reload(false);
-    })
     // history.push('/')
   }
   return (
@@ -77,30 +95,22 @@ const Login = () => {
             <Card.Img varient="top" className="col-md-10 col-sm-10 offset-md-1" src={loginImg}></Card.Img>
             <div className="text-center mt-1 mb-2"><span className="fa fa-star fa-lg mr-2"></span><span className="fa fa-star fa-lg mr-2"></span><span className="fa fa-star fa-lg mr-2"></span><span className="fa fa-star fa-lg mr-2"></span><span className="fa fa-star fa-lg mr-2"></span></div>
             <Card.Body>
-              <LocalForm  onSubmit={(values) => handleSubmit(values)}>
+              <LocalForm onSubmit={(values) => handleSubmit(values)}>
                 <Row><Col className="col-md-3 offset-md-1"><Form.Label>Batch:</Form.Label></Col>
                   <Col className="col-md-7">
-                    <Control.Select
-                      model=".type"
-                      as="select"
+                    <select
                       className="my-1 mr-sm-2 form-control"
-                      id="inlineFormCustomSelectPref"
-                      custom
                       value={type}
-                      defaultInputValue="Instructor"
                       onChange={(e) => setType(e.target.value)}
                     >
-                      <option value="Instructor">Instructor.</option>
-                      <option value="Java Programming">Java Programming.</option>
-                      <option value="Data structures and Algorithms">Data structures and Algorithms.</option>
-                      <option value="C++ Programming">C++ Programming.</option>
-                    </Control.Select>
+                      {createSelectItems()}
+                    </select>
                   </Col></Row>
                 <Form.Group controlId="formGroupEmail">
                   <Row><Col className="col-md-3 mt-3 offset-md-1">
                     <Form.Label>Email Id:</Form.Label></Col>
                     <Col className="col-md-7 mt-3">
-                      <Control.Text type="email"
+                      <Control.text type="email"
                         placeholder="Enter Your Email Id"
                         autoComplete="off"
                         className="form-control"
@@ -127,7 +137,7 @@ const Login = () => {
                   <Form.Group controlId="formGroupPassword">
                     <Row><Col className="col-md-3 offset-md-1"><Form.Label>Password:</Form.Label></Col>
                       <Col className="col-md-7">
-                        <Control.Text type="password"
+                        <Control.text type="password"
                           autoComplete="off"
                           className="form-control"
                           model=".password"

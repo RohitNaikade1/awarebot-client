@@ -29,6 +29,14 @@ const instructorSchema=new mongoose.Schema({
         type:String,
         required:true
     },
+    linkedIn:{
+        type:String,
+        required:true
+    },
+    filename:{
+        type:String,
+        required:true
+    },
     email:{
         type:String,
         required:true

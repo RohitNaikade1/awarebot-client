@@ -28,7 +28,7 @@ const Header = (props) => {
     }
     return (
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-            <Navbar.Brand>AwareBot</Navbar.Brand>
+            <Navbar.Brand className="brand">AwareBot</Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="mr-auto">

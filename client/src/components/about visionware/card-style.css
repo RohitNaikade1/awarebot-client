@@ -1,17 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@300&family=Langar&display=swap');
 body{
     background: radial-gradient(#e5e5e5,#ffff,#e5e5e5);
 }
-.imgUNcover {
-    object-fit: cover;
-  }
-.carding{
-    width:20rem;
-}
 .carding:hover{
     box-shadow: 5px 20px 10px 1px rgba(0, 0, 0, 0.253) !important;
-}
-.carding-body{
-    padding:3rem 0 !important;
 }
 .carding-text{
     font-size:0.9rem;
@@ -23,6 +15,7 @@ body{
 }
 .card-img-top:hover{
    transform: scale(1.2);
+   filter: grayscale(80%);
 }
 .overflow{
     overflow: hidden;
@@ -60,8 +53,18 @@ body{
     transform: scale(1.8);
     transition: transform 0.4s ease;
 }
-.card-img{
+.card-image{
     width: 100%;
     height: 15vw;
     object-fit: cover;
+}
+.op{
+    opacity: 1;
+}
+.titles{
+    font-family: 'Langar', cursive;
+    font-size: 40px;
+}
+.fonts{
+    font-family: 'Frank Ruhl Libre', serif;
 }

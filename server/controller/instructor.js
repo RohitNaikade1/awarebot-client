@@ -1,24 +1,28 @@
 const Instructor = require("../schemas/instructorSchema");
 const _ = require('lodash');
 const path = require('path');
+const fs = require('fs')
 
 exports.addInstructor = (req, res) => {
-    const name=req.body.name;
-    const batch=req.body.batch;
-    const education=req.body.education;
+    const name = req.body.name;
+    const ibatch = req.body.batch;
+    const batch = ibatch.toUpperCase();
+    const education = req.body.education;
     const email = req.body.email;
-    const instagram=req.body.instagram;
-    const github=req.body.github;
-    const facebook=req.body.facebook;
-    const picture= `http://localhost:5000/instructor/${req.files.picture.name}`
+    const instagram = req.body.instagram;
+    const github = req.body.github;
+    const facebook = req.body.facebook;
+    const linkedIn = req.body.linkedIn;
+    const picture = `http://localhost:5000/instructor/${req.files.picture.name}`;
+    const filename = req.files.picture.name;
 
-    const file=req.files.picture;
-   file.mv(path.join(__dirname, 'images/instructor', file.name), (err) => {
-    if (err){
-    }else{
+    const file = req.files.picture;
+    file.mv(path.join(__dirname, 'images/instructor', file.name), (err) => {
+        if (err) {
+        } else {
 
         }
-});
+    });
     Instructor.findOne({ batch: batch }, function (error, data) {
         if (data) {
             return res.status(400).json({
@@ -29,49 +33,66 @@ exports.addInstructor = (req, res) => {
                 name,
                 batch,
                 education,
-                instagram,github,
+                instagram, github,
                 facebook,
                 email,
-                picture
+                picture,
+                linkedIn,
+                filename
             });
             data.save((error, data) => {
-                    if(error){
-                        return res.status(400).json({
-                            error: "error while adding an instructor"
-                        });
-                    }else{
-                        return res.status(200).json({
-                            message: "instructor added successfully!"
-                        });
-                    }
+                if (error) {
+                    console.log(error)
+                    return res.status(400).json({
+                        error: "error while adding an instructor"
+                    });
+                } else {
+                    return res.status(200).json({
+                        message: "instructor added successfully!"
+                    });
+                }
             })
         }
     })
 }
 
 exports.updateInstructor = (req, res) => {
-    const name=req.body.name;
-    const batch=req.body.batch;
-    const education=req.body.education;
+    const name = req.body.name;
+    const ibatch = req.body.batch;
+    const batch = ibatch.toUpperCase();
+    const education = req.body.education;
     const email = req.body.email;
-    const instagram=req.body.instagram;
-    const github=req.body.github;
-    const facebook=req.body.facebook;
-    const picture= `http://localhost:5000/instructor/${req.file.filename}`
+    const instagram = req.body.instagram;
+    const github = req.body.github;
+    const facebook = req.body.facebook;
+    const linkedIn = req.body.linkedIn;
+    const picture = `http://localhost:5000/instructor/${req.files.picture.name}`;
+    const filename = req.files.picture.name;
+    const file = req.files.picture;
+    file.mv(path.join(__dirname, 'images/instructor', file.name), (err) => {
+        if (err) {
+        } else {
+
+        }
+    })
+
     Instructor.findOne({ batch: batch }, function (error, user) {
         if (!user) {
             return res.status(400).json({
                 error: "Batch does not not exist!"
             });
         } else {
+            fs.unlinkSync(path.join(__dirname, 'images/instructor', user.filename));
             const updatedFields = {
-                name:name,
-                education:education,
-                email:email,
-                instagram:instagram,
-                github:github,
-                facebook:facebook,
-                picture:picture
+                name: name,
+                education: education,
+                email: email,
+                instagram: instagram,
+                github: github,
+                facebook: facebook,
+                picture: picture,
+                linkedIn: linkedIn,
+                filename: filename
             }
             user = _.extend(user, updatedFields);
 
@@ -92,23 +113,33 @@ exports.updateInstructor = (req, res) => {
 }
 
 exports.deleteInstructor = (req, res) => {
-    Instructor.countDocuments((err,noOfDocs)=>{
-        if(noOfDocs>3){
-             const batch=req.body.batch;
-             Instructor.deleteOne({batch:batch},(err,success)=>{
-                 if(err){
+    Instructor.countDocuments((err, noOfDocs) => {
+        if (noOfDocs > 3) {
+            const ibatch = req.body.batch;
+            const batch = ibatch.toUpperCase();
+            Instructor.findOne({ batch: batch }, function (error, user) {
+                if (!user) {
                     return res.status(400).json({
-                        error: 'Error while deleting an instructor'
+                        error: "Batch does not not exist!"
                     });
-                 }else{
-                    return res.status(400).json({
-                        error: 'Instructor deleted successfully'
+                } else {
+                    fs.unlinkSync(path.join(__dirname, 'images/instructor', user.filename));
+                    Instructor.deleteOne({ batch: batch }, (err, success) => {
+                        if (err) {
+                            return res.status(400).json({
+                                error: 'Error while deleting an instructor'
+                            });
+                        } else {
+                            return res.status(200).json({
+                                message: 'Instructor deleted successfully'
+                            });
+                        }
                     });
-                 }
-             });
-        }else{
+                }
+            })
+        } else {
             return res.status(400).json({
-                error:"Only one record is remaining.deletion not allowed"
+                error: "Only one record is remaining.deletion not allowed"
             });
         }
     })
@@ -116,17 +147,17 @@ exports.deleteInstructor = (req, res) => {
 
 
 exports.readInstructor = (req, res) => {
-   Instructor.find({})
-   .exec((err,response)=>{
-    if (response) {
-        return res.status(200).json({
-            data: response
+    Instructor.find({})
+        .exec((err, response) => {
+            if (response) {
+                return res.status(200).json({
+                    data: response
+                })
+                if (err) {
+                    return res.status(500).json({
+                        data: err
+                    })
+                }
+            }
         })
-        if (err) {
-            return res.status(500).json({
-                data: err
-            })
-        }
-    }
-})
 }

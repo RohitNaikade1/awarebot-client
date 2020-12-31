@@ -9,6 +9,7 @@ import 'animate.css';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Redirect } from 'react-router';
 import { isAuth } from '../../helpers/auth';
+import Media from 'react-media';
 
 const required = (val) => val && val.length;
 const minLength = (len) => (val) => val && (val.length >= len);
@@ -258,196 +259,220 @@ function AdStudents() {
     }
     return (
         isAuth() ? isAuth().role === 'admin' ?
-            <Container fluid className="m-0 p-0">
+        <Media query="(min-width:1300px)">
+        {matches => {
+            return matches ?<Container fluid className="m-0 p-0">
                 <Row className="d-flex">
                     <Col className="col-md-3">
                         <Sidebar />
                     </Col>
                     <Col className="col-md-7 mt-5 mb-3 text-center">
-                        <h1>Students Section.</h1>
-                        <Card className="mt-5">
-                            <Card.Header>Student Credentials.</Card.Header>
-                            <Card.Body className="col-md-12 d-flex justify-content-md-center">
-                                <LocalForm>
-                                    <Row className="col-md-12">
-                                        <Col className="col-md-5">
-                                            <Form.Label>Batch</Form.Label>
-                                        </Col>
-                                        <Col className="col-md-7">
-                                            <Control.Text type="text"
-                                                placeholder="Enter Batch Name"
-                                                autoComplete="off"
-                                                className="form-control"
-                                                model=".batch"
-                                                value={batch}
-                                                onChange={(e) => setBatch(e.target.value)}
-                                                validators={{
-                                                    required
-                                                }}
-                                            />
-                                            <Errors
-                                                className="text-danger"
-                                                model=".batch"
-                                                show="touched"
-                                                messages={{
-                                                    required: 'Required '
-                                                }}
-                                            />
-                                        </Col>
-                                    </Row>
-                                    <Row className="col-md-12 mt-3">
-                                        <Col className="col-md-5">
-                                            <Form.Label>Student Email</Form.Label>
-                                        </Col>
-                                        <Col className="col-md-7">
-                                            <Control.Text type="text"
-                                                placeholder="Enter Email ID"
-                                                autoComplete="off"
-                                                className="form-control"
-                                                model=".email"
-                                                value={studentMail}
-                                                onChange={(e) => setStudentMail(e.target.value)}
-                                                validators={{
-                                                    required, validEmail
-                                                }}
-                                            />
-                                            <Errors
-                                                className="text-danger"
-                                                model=".email"
-                                                show="touched"
-                                                messages={{
-                                                    required: 'Required ',
-                                                    validEmail: 'Enter a valid email address!'
-                                                }}
-                                            />
-                                        </Col>
-                                    </Row>
-                                    <Row className="col-md-12 mt-3">
-                                        <Col className="col-md-5">
-                                            <Form.Label>Student Password</Form.Label>
-                                        </Col>
-                                        <Col className="col-md-7">
-                                            <Control.Text
-                                                type="password"
-                                                model=".password"
-                                                className="form-control"
-                                                placeholder="Enter Password"
-                                                autoComplete="off"
-                                                value={password}
-                                                onChange={e => setPassword(e.target.value)}
-                                                validators={{
-                                                    required, minLength: minLength(8)
-                                                }}
-                                            />
-                                            <Errors
-                                                className="text-danger"
-                                                model=".password"
-                                                show="touched"
-                                                messages={{
-                                                    required: 'Required ',
-                                                    minLength: 'Password should be greater than 8 characters!'
-                                                }}
-                                            />
-                                        </Col>
-                                    </Row>
-                                    <Row className="col-md-12 mt-3">
-                                        <Col className="col-md-5">
-                                            <Form.Label>Confirm Password</Form.Label>
-                                        </Col>
-                                        <Col className="col-md-7">
-                                            <Control.Text
-                                                type="password"
-                                                placeholder="Confirm Password"
-                                                className="form-control"
-                                                autoComplete="off"
-                                                model=".rpassword"
-                                                value={repeatPassword}
-                                                onChange={e => setRepeatPassword(e.target.value)}
-                                                validators={{
-                                                    required, minLength: minLength(8)
-                                                }}
-                                            />
-                                            <Errors
-                                                className="text-danger"
-                                                model=".rpassword"
-                                                show="touched"
-                                                messages={{
-                                                    required: 'Required ',
-                                                    minLength: 'Password should be greater than 8 characters!'
-                                                }}
-                                            />
-                                        </Col>
-                                    </Row>
-                                    <Button className="mt-4" type="submit" onClick={AddBatch}>Add Batch</Button>
-                                    <Button className="mt-4 ml-2 btn-success" type="submit" onClick={updatePassword}>Update Password</Button>
-                                    <Button className="mt-4 ml-2 btn-danger" type="submit" onClick={deleteBatch}>Delete Batch</Button>                                </LocalForm>
-                            </Card.Body>
-                        </Card>
-                        <Card className="mt-5">
-                            <Card.Header>Add/Remove Students.</Card.Header>
-                            <Card.Body className="col-md-12 d-flex justify-content-md-center">
-                                <LocalForm>
-                                <Row className="col-md-12">
-                                        <Col className="col-md-5">
-                                            <Form.Label>Batch</Form.Label>
-                                        </Col>
-                                        <Col className="col-md-7">
-                                            <Control.Text type="text"
-                                                placeholder="Enter Batch Name"
-                                                autoComplete="off"
-                                                className="form-control"
-                                                model=".batch"
-                                                value={batch}
-                                                onChange={(e) => setBatch(e.target.value)}
-                                                validators={{
-                                                    required
-                                                }}
-                                            />
-                                            <Errors
-                                                className="text-danger"
-                                                model=".batch"
-                                                show="touched"
-                                                messages={{
-                                                    required: 'Required '
-                                                }}
-                                            />
-                                        </Col>
-                                    </Row>
-                                    <Row className="col-md-12 mt-3">
-                                        <Col className="col-md-5">
-                                            <Form.Label>Student Email</Form.Label>
-                                        </Col>
-                                        <Col className="col-md-7">
-                                            <Control.Text type="text"
-                                                placeholder="Enter Email ID"
-                                                autoComplete="off"
-                                                className="form-control"
-                                                model=".email"
-                                                value={studentMail}
-                                                onChange={(e) => setStudentMail(e.target.value)}
-                                                validators={{
-                                                    required, validEmail
-                                                }}
-                                            />
-                                            <Errors
-                                                className="text-danger"
-                                                model=".email"
-                                                show="touched"
-                                                messages={{
-                                                    required: 'Required ',
-                                                    validEmail: 'Enter a valid email address!'
-                                                }}
-                                            />
-                                        </Col>
-                                    </Row>
-                                    <Button className="mt-4" type="submit" onClick={addEmail}>Add</Button>
-                                    <Button className="mt-4 ml-2 btn-danger" type="submit" onClick={removeEmail}>Remove</Button>
-                                </LocalForm>
-                            </Card.Body>
-                        </Card>
+                        <FadeTransform
+                            in
+                            transformProps={{
+                                exitTransform: 'scale(0.3) translateY(-20%)'
+                            }}>
+                            <h1 className="titles">Students Section.</h1>
+                        </FadeTransform>
+                        <FadeTransform
+                            in
+                            transformProps={{
+                                exitTransform: 'scale(0.3) translateY(-20%)'
+                            }}>
+                            <Card className="mt-5">
+                                <Card.Header className="heads">Student Credentials.</Card.Header>
+                                <Card.Body className="col-md-12 d-flex justify-content-md-center">
+                                    <LocalForm>
+                                        <Row className="col-md-12">
+                                            <Col className="col-md-5">
+                                                <Form.Label>Batch</Form.Label>
+                                            </Col>
+                                            <Col className="col-md-7">
+                                                <Control.text type="text"
+                                                    placeholder="Enter Batch Name"
+                                                    autoComplete="off"
+                                                    className="form-control"
+                                                    model=".batch"
+                                                    value={batch}
+                                                    onChange={(e) => setBatch(e.target.value)}
+                                                    validators={{
+                                                        required
+                                                    }}
+                                                />
+                                                <Errors
+                                                    className="text-danger"
+                                                    model=".batch"
+                                                    show="touched"
+                                                    messages={{
+                                                        required: 'Required '
+                                                    }}
+                                                />
+                                            </Col>
+                                        </Row>
+                                        <Row className="col-md-12 mt-3">
+                                            <Col className="col-md-5">
+                                                <Form.Label>Student Email</Form.Label>
+                                            </Col>
+                                            <Col className="col-md-7">
+                                                <Control.text type="text"
+                                                    placeholder="Enter Email ID"
+                                                    autoComplete="off"
+                                                    className="form-control"
+                                                    model=".email"
+                                                    value={studentMail}
+                                                    onChange={(e) => setStudentMail(e.target.value)}
+                                                    validators={{
+                                                        required, validEmail
+                                                    }}
+                                                />
+                                                <Errors
+                                                    className="text-danger"
+                                                    model=".email"
+                                                    show="touched"
+                                                    messages={{
+                                                        required: 'Required ',
+                                                        validEmail: 'Enter a valid email address!'
+                                                    }}
+                                                />
+                                            </Col>
+                                        </Row>
+                                        <Row className="col-md-12 mt-3">
+                                            <Col className="col-md-5">
+                                                <Form.Label>Student Password</Form.Label>
+                                            </Col>
+                                            <Col className="col-md-7">
+                                                <Control.text
+                                                    type="password"
+                                                    model=".password"
+                                                    className="form-control"
+                                                    placeholder="Enter Password"
+                                                    autoComplete="off"
+                                                    value={password}
+                                                    onChange={e => setPassword(e.target.value)}
+                                                    validators={{
+                                                        required, minLength: minLength(8)
+                                                    }}
+                                                />
+                                                <Errors
+                                                    className="text-danger"
+                                                    model=".password"
+                                                    show="touched"
+                                                    messages={{
+                                                        required: 'Required ',
+                                                        minLength: 'Password should be greater than 8 characters!'
+                                                    }}
+                                                />
+                                            </Col>
+                                        </Row>
+                                        <Row className="col-md-12 mt-3">
+                                            <Col className="col-md-5">
+                                                <Form.Label>Confirm Password</Form.Label>
+                                            </Col>
+                                            <Col className="col-md-7">
+                                                <Control.text
+                                                    type="password"
+                                                    placeholder="Confirm Password"
+                                                    className="form-control"
+                                                    autoComplete="off"
+                                                    model=".rpassword"
+                                                    value={repeatPassword}
+                                                    onChange={e => setRepeatPassword(e.target.value)}
+                                                    validators={{
+                                                        required, minLength: minLength(8)
+                                                    }}
+                                                />
+                                                <Errors
+                                                    className="text-danger"
+                                                    model=".rpassword"
+                                                    show="touched"
+                                                    messages={{
+                                                        required: 'Required ',
+                                                        minLength: 'Password should be greater than 8 characters!'
+                                                    }}
+                                                />
+                                            </Col>
+                                        </Row>
+                                        <Button className="mt-4" type="submit" onClick={AddBatch}>Add Batch</Button>
+                                        <Button className="mt-4 ml-2 btn-success" type="submit" onClick={updatePassword}>Update Password</Button>
+                                        <Button className="mt-4 ml-2 btn-danger" type="submit" onClick={deleteBatch}>Delete Batch</Button>                                </LocalForm>
+                                </Card.Body>
+                            </Card>
+                        </FadeTransform>
+                        <FadeTransform
+                            in
+                            transformProps={{
+                                exitTransform: 'scale(0.3) translateY(-20%)'
+                            }}>
+                            <Card className="mt-5">
+                                <Card.Header>Add/Remove Students.</Card.Header>
+                                <Card.Body className="col-md-12 d-flex justify-content-md-center">
+                                    <LocalForm>
+                                        <Row className="col-md-12">
+                                            <Col className="col-md-5">
+                                                <Form.Label>Batch</Form.Label>
+                                            </Col>
+                                            <Col className="col-md-7">
+                                                <Control.text type="text"
+                                                    placeholder="Enter Batch Name"
+                                                    autoComplete="off"
+                                                    className="form-control"
+                                                    model=".batch"
+                                                    value={batch}
+                                                    onChange={(e) => setBatch(e.target.value)}
+                                                    validators={{
+                                                        required
+                                                    }}
+                                                />
+                                                <Errors
+                                                    className="text-danger"
+                                                    model=".batch"
+                                                    show="touched"
+                                                    messages={{
+                                                        required: 'Required '
+                                                    }}
+                                                />
+                                            </Col>
+                                        </Row>
+                                        <Row className="col-md-12 mt-3">
+                                            <Col className="col-md-5">
+                                                <Form.Label>Student Email</Form.Label>
+                                            </Col>
+                                            <Col className="col-md-7">
+                                                <Control.text type="text"
+                                                    placeholder="Enter Email ID"
+                                                    autoComplete="off"
+                                                    className="form-control"
+                                                    model=".email"
+                                                    value={studentMail}
+                                                    onChange={(e) => setStudentMail(e.target.value)}
+                                                    validators={{
+                                                        required, validEmail
+                                                    }}
+                                                />
+                                                <Errors
+                                                    className="text-danger"
+                                                    model=".email"
+                                                    show="touched"
+                                                    messages={{
+                                                        required: 'Required ',
+                                                        validEmail: 'Enter a valid email address!'
+                                                    }}
+                                                />
+                                            </Col>
+                                        </Row>
+                                        <Button className="mt-4" type="submit" onClick={addEmail}>Add</Button>
+                                        <Button className="mt-4 ml-2 btn-danger" type="submit" onClick={removeEmail}>Remove</Button>
+                                    </LocalForm>
+                                </Card.Body>
+                            </Card>
+                        </FadeTransform>
                     </Col>
                 </Row>
-            </Container > : isAuth().role === 'student' || isAuth().role === 'instructor' ? <Redirect to="/" />
+            </Container >: <div>
+                            <h3 className="text-center mt-5 mb-5 titles">This Section is accessible only from Desktop resolutions.</h3>
+                        </div>;
+                }}
+            </Media> : isAuth().role === 'student' || isAuth().role === 'instructor' ? <Redirect to="/" />
                 : <Redirect to="/" /> : <Redirect to="/login" />
     )
 }

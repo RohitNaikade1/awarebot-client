@@ -11,6 +11,9 @@ import { store } from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
 import 'animate.css';
 import { FadeTransform, Fade, Stagger } from 'react-animation-components';
+import { Redirect } from 'react-router';
+import { isAuth } from '../../helpers/auth';
+import Medias from 'react-media';
 
 const required = (val) => val && val.length;
 const validSentence = (val) => /\b((?!=|\,|\.).)+(.)\b/i.test(val);
@@ -35,7 +38,7 @@ function AdPublish() {
                 <Card className="col-md-12 col-sm-12 mt-5">
                     <Accordion className="myAccordian" defaultActiveKey={activeKey}>
                         <Accordion.Toggle as={Card.Header} className="back" eventKey={data._id}>
-                            <h4>{data.title}</h4>
+                            <h4 className="heads">{data.title}</h4>
                         </Accordion.Toggle>
                         <Accordion.Collapse eventKey={data._id}>
                             <Card.Body>
@@ -151,7 +154,10 @@ function AdPublish() {
     }
 
     return (
-        <Container fluid className="m-0 p-0">
+        isAuth() ? isAuth().role === 'admin' ?
+            <Medias query="(min-width:1300px)">
+                {matches => {
+                    return matches ? <Container fluid className="m-0 p-0">
             <Modal isOpen={isModalOpen} toggle={toggleModal}>
                 <ModalHeader toggle={toggleModal}><BsPencilSquare className="mr-2" />Add Poster.</ModalHeader>
                 <ModalBody>
@@ -235,15 +241,26 @@ function AdPublish() {
                     <Sidebar />
                 </Col>
                 <Col className="col-md-7 mt-5 text-center">
-                    <h1>Publishment Section.</h1>
-                    <Button className="mt-4 col-md-5" onClick={toggleModal}>
-                        <BsPlusCircle size={25} className="mr-3" />Add New Poster</Button>
+                    <FadeTransform
+                        in
+                        transformProps={{
+                            exitTransform: 'scale(0.3) translateY(-20%)'
+                        }}>
+                        <h1 className="titles">Publishment Section.</h1>
+                        <Button className="mt-4 col-md-5" onClick={toggleModal}>
+                            <BsPlusCircle size={25} className="mr-3" />Add New Poster</Button>
+                    </FadeTransform>
                     <Stagger in>
                         <div>{cards}</div>
                     </Stagger>
                 </Col>
             </Row>
-        </Container>
+        </Container>: <div>
+                            <h3 className="text-center mt-5 mb-5 titles">This Section is accessible only from Desktop resolutions.</h3>
+                        </div>;
+                }}
+            </Medias> : isAuth().role === 'student' || isAuth().role === 'instructor' ? <Redirect to="/" />
+                : <Redirect to="/" /> : <Redirect to="/login" />
     )
 }
 

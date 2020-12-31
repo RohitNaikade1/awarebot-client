@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
 .text{
     color: #f0a500;
 }
@@ -8,16 +9,20 @@
   .carousel-item:hover .carousel-caption{
     opacity:1;
   }
-  image { 
+  .image { 
     opacity: 1; 
-    transition:500ms ease-in-out;
+    transition:200ms ease-in-out;
   } 
   
-  img:hover {
+  .image:hover {
     filter: brightness(30%);
+    transition:200ms ease-in-out;
   }
   .text {
     margin: 0;
   color: white;
+}
+.heads{
+  font-family: 'Bangers', cursive;
 }
   
