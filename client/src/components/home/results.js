@@ -39,7 +39,7 @@ const Population = () => {
                 exitTransform: 'scale(0.5) translateY(-50%)'
             }}>
         <Card className="col-md-11">
-            <Card.Title className="text-center mt-4"><h2 className="heads">Batch wise Results in mast 5 months.</h2></Card.Title>
+            <Card.Title className="text-center mt-4"><h2 className="heads">Batch wise Results in last 5 months.</h2></Card.Title>
             <Card.Body className="mt-1">
                 <Bar
                     data={data}

@@ -41,35 +41,36 @@ exports.userSignIn=(req,res)=>{
             }
         })  
     }else{
-        Email.findOne({emails:email},(err,user)=>{
+        Email.findOne({batch:batch , emails: email},(err,user)=>{
             if(!user){
                 return res.status(400).json({
-                    warning:"user with this email does not exists"
+                    warning:`user with this ${email} not exists in ${batch}`
                 })
             }else{
-                if(!user.authenticateStudent(password)){
-                    return res.status(400).json({
-                        warning: 'Email and password do not match'
-                    });
-                }else{
-                    role="student";
-                    const token = jwt.sign(
-                        {
-                            role,
-                            email,
-                            password
-                        },
-                        key.SECRET_KEY,
-                        {
-                            expiresIn: '1d'
+                console.log(user)
+                        if (!user.authenticateStudent(password)) {
+                            return res.status(400).json({
+                                warning: 'Email and password do not match'
+                            });
+                        } else {
+                            role = "student";
+                            const token = jwt.sign(
+                                {
+                                    role,
+                                    email,
+                                    password
+                                },
+                                key.SECRET_KEY,
+                                {
+                                    expiresIn: '1d'
+                                }
+                            );
+                            return res.status(200).json({
+                                data: token
+                            });
                         }
-                    );
-                    return res.status(200).json({
-                        data: token
-                    });
-                }
             }
-        })  
+        })
     }
 }
 

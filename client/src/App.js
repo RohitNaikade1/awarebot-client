@@ -18,7 +18,8 @@ import Loginpage from './components/login';
 import { Router, Route, Switch } from 'react-router-dom';
 import ReactNotification from 'react-notifications-component';
 import history from './components/helpers/history';
-
+import AdminRouter from './components/onlyAdmin';
+import AdminInstructorRouter from './components/adminInstructorRouter';
 function App() {
   return (
     <div className="app">
@@ -27,17 +28,17 @@ function App() {
         <Header />
         <Switch>
           <Route path="/" exact component={Home}></Route>
-          <Route path="/publish" exact component={adPublish}></Route>
-          <Route path="/admin" component={Admin}></Route>
-          <Route path="/notice" component={Notice}></Route>
+          <AdminRouter path="/publish" exact component={adPublish}></AdminRouter>
+          <AdminRouter path="/admin" component={Admin}></AdminRouter>
+          <AdminInstructorRouter path="/notice" component={Notice}></AdminInstructorRouter>
           <Route path="/login" component={Loginpage}></Route>
-          <Route path="/adPosts" component={adPosts}></Route>
+          <AdminInstructorRouter path="/adPosts" component={adPosts}></AdminInstructorRouter>
           <Route path="/about" component={About}></Route>
-          <Route path="/adSchemes" component={Notice}></Route>
-          <Route path="/adStaff" component={adStaff}></Route>
-          <Route path="/adHome" component={AdHome}></Route>
-          <Route path="/adCreds" component={adCreds}></Route>
-          <Route path="/adStudents" component={adStudents}></Route>
+          <AdminRouter path="/adSchemes" component={Notice}></AdminRouter>
+          <AdminRouter path="/adStaff" component={adStaff}></AdminRouter>
+          <AdminInstructorRouter path="/adHome" component={AdHome}></AdminInstructorRouter>
+          <AdminRouter path="/adCreds" component={adCreds}></AdminRouter>
+          <AdminRouter path="/adStudents" component={adStudents}></AdminRouter>
         </Switch>
         <Footer />
       </Router>

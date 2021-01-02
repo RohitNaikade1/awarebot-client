@@ -17,18 +17,18 @@ exports.addInstructor = (req, res) => {
     const filename = req.files.picture.name;
 
     const file = req.files.picture;
-    file.mv(path.join(__dirname, 'images/instructor', file.name), (err) => {
-        if (err) {
-        } else {
-
-        }
-    });
     Instructor.findOne({ batch: batch }, function (error, data) {
         if (data) {
             return res.status(400).json({
                 error: "Batch already exists!"
             });
         } else {
+            file.mv(path.join(__dirname, 'images/instructor', file.name), (err) => {
+                if (err) {
+                } else {
+        
+                }
+            });
             const data = new Instructor({
                 name,
                 batch,
@@ -69,12 +69,6 @@ exports.updateInstructor = (req, res) => {
     const picture = `http://localhost:5000/instructor/${req.files.picture.name}`;
     const filename = req.files.picture.name;
     const file = req.files.picture;
-    file.mv(path.join(__dirname, 'images/instructor', file.name), (err) => {
-        if (err) {
-        } else {
-
-        }
-    })
 
     Instructor.findOne({ batch: batch }, function (error, user) {
         if (!user) {
@@ -82,6 +76,12 @@ exports.updateInstructor = (req, res) => {
                 error: "Batch does not not exist!"
             });
         } else {
+            file.mv(path.join(__dirname, 'images/instructor', file.name), (err) => {
+                if (err) {
+                } else {
+        
+                }
+            })
             fs.unlinkSync(path.join(__dirname, 'images/instructor', user.filename));
             const updatedFields = {
                 name: name,

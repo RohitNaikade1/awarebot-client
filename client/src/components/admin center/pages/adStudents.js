@@ -258,7 +258,6 @@ function AdStudents() {
         }
     }
     return (
-        isAuth() ? isAuth().role === 'admin' ?
         <Media query="(min-width:1300px)">
         {matches => {
             return matches ?<Container fluid className="m-0 p-0">
@@ -472,8 +471,7 @@ function AdStudents() {
                             <h3 className="text-center mt-5 mb-5 titles">This Section is accessible only from Desktop resolutions.</h3>
                         </div>;
                 }}
-            </Media> : isAuth().role === 'student' || isAuth().role === 'instructor' ? <Redirect to="/" />
-                : <Redirect to="/" /> : <Redirect to="/login" />
+            </Media>
     )
 }
 

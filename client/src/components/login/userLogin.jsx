@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import {useDispatch,useSelector} from 'react-redux';
 import loginImg from "./student.jpg";
 import './login.css';
 import { Row, Col, Card, Container, Button, Form} from 'react-bootstrap';
@@ -10,32 +11,28 @@ import { authenticate, isAuth } from '../helpers/auth';
 import { store } from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
 import 'animate.css';
+import {credsFetch} from '../Redux/actions/credActions';
 
 const required = (val) => val && val.length;
 const minLength = (len) => (val) => val && (val.length >= len);
 const validEmail = (val) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
 
-const Login = () => {
+const Login = ({props}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [type, setType] = useState("Instructor");
   var data = "";
+  const dispatch=useDispatch()
   useEffect(() => {
-    axiosInstance.get('creds/fetch')
-      .then(res => {
-        data=res?.data?.data;
-      })
-      console.log(data)
+    dispatch((credsFetch()));  
   })
-
-  const createSelectItems=()=> {
-    let items = [];         
-    for (let i = 0; i <= data.maxValue; i++) {     
-      console.log(data[i])        
-         items.push(<option key={i} value={data[i].batch}>{data[i].batch}</option>);   
-    }
-    return items;
-} 
+  const Record=useSelector((state)=>state.creds);
+  if(Record?.creds[0]){
+    // console.log(Record.creds)
+      data=Record.creds.map((data,key)=>{
+        return <option key={data.batch}>{data.batch}</option>
+      })
+  }
 
 
   const handleSubmit = (values) => {
@@ -44,7 +41,7 @@ const Login = () => {
       password,
       batch: type
     }
-    console.log(resData)
+    // console.log(resData)
     axiosInstance.post('auth/signin', resData)
       .then((data) => {
         let user = jwt.decode(data.data.data);
@@ -98,13 +95,16 @@ const Login = () => {
               <LocalForm onSubmit={(values) => handleSubmit(values)}>
                 <Row><Col className="col-md-3 offset-md-1"><Form.Label>Batch:</Form.Label></Col>
                   <Col className="col-md-7">
+                    <div id="react-search">
                     <select
                       className="my-1 mr-sm-2 form-control"
                       value={type}
+                      defaultValue="Instructor"
                       onChange={(e) => setType(e.target.value)}
                     >
-                      {createSelectItems()}
-                    </select>
+                      <option key="Instructor">Instructor</option>
+                      {data}
+                    </select></div>
                   </Col></Row>
                 <Form.Group controlId="formGroupEmail">
                   <Row><Col className="col-md-3 mt-3 offset-md-1">

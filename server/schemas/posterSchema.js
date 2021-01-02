@@ -12,6 +12,9 @@ const posterSchema=new mongoose.Schema({
     picture:{
         type:String,
         required:true
+    },
+    filename:{
+        type:String
     }
 },{
     timestamps:true

@@ -6,6 +6,7 @@ import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 import "./schemes-style.css";
 import { Redirect } from 'react-router';
 import { isAuth } from '../helpers/auth';
+import moment from 'moment';
 
 const Notice = () => {
     const dispatch = useDispatch();
@@ -55,7 +56,6 @@ const Notice = () => {
         })
     }
     return (
-        isAuth() ? isAuth().role === 'admin' || isAuth().role === 'instructor' ?
         <Container fluid className="mt-5 mb-5">
             <Row className="mt-3 mb-2 text-center">
                 <Col>
@@ -75,8 +75,7 @@ const Notice = () => {
                     </Stagger>
                 </Col>
             </Row>
-        </Container>: isAuth().role === 'student' ? <Redirect to="/" />
-                : <Redirect to="/" /> : <Redirect to="/login" />
+        </Container>
     )
 }
 
