@@ -9,7 +9,7 @@ const onlyAdmin = ({ component: Component, ...rest }) => {
             render={props => 
                 isAuth() && isAuth().role === 'admin' ? 
                 <Component {...props} /> : 
-                <Redirect to="/login" />
+                <Redirect to="/" />
             }
         />
     )

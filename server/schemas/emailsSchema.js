@@ -2,10 +2,16 @@ const mongoose=require("mongoose");
 const bcrypt=require("bcrypt")
 const emailsSchema=new mongoose.Schema({
     batch:{
-       type:String
+       type:String,
+       trim:true
+    },
+    student:{
+        type:String,
+        trim:true
     },
     hash_student:{
-        type:String
+        type:String,
+        trim:true
     },
     emails:{
         type:[String]

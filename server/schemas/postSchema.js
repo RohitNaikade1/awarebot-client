@@ -11,19 +11,23 @@ const postSchema=new mongoose.Schema({
     },
     time:{
         type:String,
-        required:true
+        required:true,
+        trim:true
     },
     subject:{
         type:String,
-        required:true
+        required:true,
+        trim:true
     },
     type:{
         type:String,
-        required:true
+        required:true,
+        trim:true
     },
     description:{
         type:String,
-        required:true
+        required:true,
+        trim:true
     },
     weblink:{
         type:String,

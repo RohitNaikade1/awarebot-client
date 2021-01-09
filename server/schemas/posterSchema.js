@@ -3,18 +3,22 @@ const mongoose=require("mongoose");
 const posterSchema=new mongoose.Schema({
     caption:{
         type:String,
-        required:true
+        required:true,
+        trim:true
     },
     title:{
         type:String,
-        required:true
+        required:true,
+        trim:true
     },
     picture:{
         type:String,
-        required:true
+        required:true,
+        trim:true
     },
     filename:{
-        type:String
+        type:String,
+        trim:true
     }
 },{
     timestamps:true

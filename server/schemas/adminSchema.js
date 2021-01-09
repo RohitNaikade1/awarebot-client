@@ -2,10 +2,12 @@ const mongoose=require("mongoose");
 const bcrypt=require('bcrypt');
 const adminSchema=new mongoose.Schema({
     email:{
-       type:String
+       type:String,
+       trim:true
     },
     hash_password:{
-        type:String
+        type:String,
+        trim:true
     }
 },{
     timestamps:true

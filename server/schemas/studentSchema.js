@@ -11,11 +11,13 @@ const studentSchema=new mongoose.Schema({
     },
     emailId:{
         type:String,
-        required:true
+        required:true,
+        trim:true
     },
     batch:{
         type:[String],
-        required:true
+        required:true,
+        trim:true
     }
 },{
     timestamps:true

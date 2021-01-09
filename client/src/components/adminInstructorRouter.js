@@ -9,7 +9,7 @@ const adminInstructor = ({ component: Component, ...rest }) => {
             render={props => 
                 isAuth() && (isAuth().role === 'admin' || isAuth().role === 'instructor')? 
                 <Component {...props} /> : 
-                <Redirect to="/login" />
+                <Redirect to="/" />
             }
         />
     )
