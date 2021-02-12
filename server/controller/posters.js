@@ -5,7 +5,7 @@ const fs = require('fs')
 exports.addPoster = (req, res) => {
     const caption = req.body.caption;
     const title = req.body.title;
-    const picture = `http://localhost:5000/poster/${req.files.picture.name}`;
+    const picture = `https://awarebot.herokuapp.com/poster/${req.files.picture.name}`;
     const filename = req.files.picture.name;
     const file = req.files.picture;
     file.mv(path.join(__dirname, 'images/poster', file.name), (err) => {

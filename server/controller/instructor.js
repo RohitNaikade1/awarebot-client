@@ -13,7 +13,7 @@ exports.addInstructor = (req, res) => {
     const github = req.body.github;
     const facebook = req.body.facebook;
     const linkedIn = req.body.linkedIn;
-    const picture = `http://localhost:5000/instructor/${req.files.picture.name}`;
+    const picture = `https://awarebot.herokuapp.com/instructor/${req.files.picture.name}`;
     const filename = req.files.picture.name;
 
     const file = req.files.picture;
@@ -66,7 +66,7 @@ exports.updateInstructor = (req, res) => {
     const github = req.body.github;
     const facebook = req.body.facebook;
     const linkedIn = req.body.linkedIn;
-    const picture = `http://localhost:5000/instructor/${req.files.picture.name}`;
+    const picture = `https://awarebot.herokuapp.com/instructor/${req.files.picture.name}`;
     const filename = req.files.picture.name;
     const file = req.files.picture;
 
