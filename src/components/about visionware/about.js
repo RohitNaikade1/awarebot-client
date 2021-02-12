@@ -135,7 +135,7 @@ const About = () => {
                                                     <a href={data.instagram} target="blank">
                                                         <span className="fa fa-instagram text-danger fa-lg icon ml-3"></span></a>
                                                     <a href={data.twitter} target="blank">
-                                                        <span className="fa fa-twitter-square text-primary icon fa-lg ml-3"></span></a>
+                                                        <span className="fa fa-facebook-square text-primary icon fa-lg ml-3"></span></a>
                                                     <a href={data.github} target="blank">
                                                         <span className="fa fa-github-square text-dark fa-lg icon ml-3"></span></a>
                                                 </div>
