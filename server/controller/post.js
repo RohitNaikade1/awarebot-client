@@ -45,7 +45,7 @@ exports.fetchRecord=(req,res)=>{
                 data: response
             })
             if (err) {
-                return res.status(500).json({
+                return res.status(400).json({
                     data: err
                 })
             }
@@ -63,7 +63,7 @@ exports.fetchToday=(req,res)=>{
                 data: response
             })
             if (err) {
-                return res.status(500).json({
+                return res.status(400).json({
                     data: err
                 })
             }
@@ -79,7 +79,7 @@ exports.deleteRecord=(req,res)=>{
                 data: "success"
             })
             if (err) {
-                return res.status(500).json({
+                return res.status(400).json({
                     data: err
                 })
             }

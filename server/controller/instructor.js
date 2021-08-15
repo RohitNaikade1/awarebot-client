@@ -2,7 +2,7 @@ const Instructor = require("../schemas/instructorSchema");
 const _ = require('lodash');
 const path = require('path');
 const fs = require('fs')
-
+const key=require('../config/prod');
 exports.addInstructor = (req, res) => {
     const name = req.body.name;
     const ibatch = req.body.batch;
@@ -13,7 +13,7 @@ exports.addInstructor = (req, res) => {
     const github = req.body.github;
     const facebook = req.body.facebook;
     const linkedIn = req.body.linkedIn;
-    const picture = `https://awarebot.herokuapp.com/instructor/${req.files.picture.name}`;
+    const picture = `${key.API}/instructor/${req.files.picture.name}`;
     const filename = req.files.picture.name;
 
     const file = req.files.picture;
@@ -66,7 +66,7 @@ exports.updateInstructor = (req, res) => {
     const github = req.body.github;
     const facebook = req.body.facebook;
     const linkedIn = req.body.linkedIn;
-    const picture = `https://awarebot.herokuapp.com/instructor/${req.files.picture.name}`;
+    const picture = `${key.API}/instructor/${req.files.picture.name}`;
     const filename = req.files.picture.name;
     const file = req.files.picture;
 

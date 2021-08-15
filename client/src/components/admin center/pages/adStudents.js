@@ -153,7 +153,7 @@ function AdStudents() {
             .then(res => {
                 store.addNotification({
                     title: `${res.data.message}`,
-                    message: `Now students having an  access of batch notifications`,
+                    message: `Now students having an access of batch notifications`,
                     type: "success",
                     container: 'top-right',
                     animationIn: ["animated", "fadeIn"],

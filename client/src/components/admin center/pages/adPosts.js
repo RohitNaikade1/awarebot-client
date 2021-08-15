@@ -45,8 +45,8 @@ function AdPosts() {
         const record = {
             key: id
         }
-        axiosInstance.post('post/deletePost', record);
-        setTimeout(
+        axiosInstance.post('post/deletePost', record)
+        .then(res=>{
             store.addNotification({
                 title: 'Post deleted successfully!',
                 message: 'Add new updates for students!',
@@ -58,8 +58,9 @@ function AdPosts() {
                     duration: 3000,
                     showIcon: true
                 }
-            }), 3000);
-        window.location.reload(false);
+            })
+            window.location.reload(false);
+        }) 
     }
     if (posts?.posts[0]) {
         const activeKey = posts.posts[0]._id;
@@ -112,20 +113,22 @@ function AdPosts() {
             time
         }
         console.log(postData);
-        axiosInstance.post('post/addPost', postData);
-        setTimeout(store.addNotification({
-            title: 'Post created successfully!',
-            message: 'We will notify students about this!',
-            type: "info",
-            container: 'top-right',
-            animationIn: ["animated", "fadeIn"],
-            animationOut: ["animated", "fadeOut"],
-            dismiss: {
-                duration: 3000,
-                showIcon: true
-            }
-        }), 3000);
-        window.location.reload(false);
+        axiosInstance.post('post/addPost', postData)
+        .then(res=>{
+            store.addNotification({
+                title: 'Post created successfully!',
+                message: 'We will notify students about this!',
+                type: "info",
+                container: 'top-right',
+                animationIn: ["animated", "fadeIn"],
+                animationOut: ["animated", "fadeOut"],
+                dismiss: {
+                    duration: 3000,
+                    showIcon: true
+                }
+            })
+            window.location.reload(false);
+        })       
     }
     const toggleModal = () => {
         setIsModalOpen(!isModalOpen);

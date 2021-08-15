@@ -1,1 +1,2 @@
-export const api='https://awarebot.herokuapp.com/';
+export const api='http://localhost:5000/';
+// export const api='https://awarebot.herokuapp.com/';
